@@ -2,7 +2,7 @@ package sample.model;
 
 public class User {
 
-    private String name;
+    private String firstName;
     private String lastName;
     private String userName;
     private String password;
@@ -10,19 +10,19 @@ public class User {
     public User(){
     }
 
-    public User(String name, String lastName, String userName, String password) {
-        this.name = name;
+    public User(String firstName, String lastName, String userName, String password) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -52,7 +52,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
