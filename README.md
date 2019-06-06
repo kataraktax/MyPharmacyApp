@@ -10,8 +10,10 @@ To do:
 - main screen
 - medicine adding panel
 - adding medicines to the database
-- list of doctors
+- display list of medicines
 - the option to sort the list
-- further goals to consider
+
+
+- to be continued
 
 
