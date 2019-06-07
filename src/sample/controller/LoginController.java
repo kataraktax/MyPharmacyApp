@@ -25,25 +25,17 @@ public class LoginController {
     @FXML
     private JFXPasswordField passwordLoginText;
 
-    private DatabaseHandler databaseHandler;
-
-    private FadeInFadeOut fadeInFadeOut;
-
     @FXML
     void initialize(){
-        fadeInFadeOut = new FadeInFadeOut();
-
-        databaseHandler = new DatabaseHandler();
+        FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
+        DatabaseHandler databaseHandler = new DatabaseHandler();
 
         String createUserScene = "/sample/view/create_user.fxml";
 
         fadeInFadeOut.makeFadeIn(rootAnchorPane);
 
         // load create user scene
-        createNewUserButton.setOnAction(event -> {
-            fadeInFadeOut.makeFadeOut(rootAnchorPane, createUserScene);
-
-        });
+        createNewUserButton.setOnAction(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, createUserScene));
 
     }
 

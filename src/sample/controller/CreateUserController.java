@@ -36,11 +36,9 @@ public class CreateUserController {
     @FXML
     private JFXButton createUserButton;
 
-    private FadeInFadeOut fadeInFadeOut;
-
     @FXML
     void initialize(){
-        fadeInFadeOut = new FadeInFadeOut();
+        FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
         fadeInFadeOut.makeFadeIn(rootAnchorPane);
 
         createUserButton.setOnAction(event -> {

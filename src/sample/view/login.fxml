@@ -26,6 +26,7 @@
                </font>
             </Label>
             <JFXTextField fx:id="userNameLoginText" alignment="CENTER" focusColor="#75a478" layoutX="125.0" layoutY="364.0" prefHeight="25.0" prefWidth="250.0" promptText="User Name" unFocusColor="BLACK" />
+            <JFXPasswordField fx:id="passwordLoginText" alignment="CENTER" focusColor="#75a478" layoutX="125.0" layoutY="418.0" prefHeight="25.0" prefWidth="250.0" promptText="Password" unFocusColor="BLACK" />
             <JFXButton fx:id="loginButton" layoutX="143.0" layoutY="492.0" prefHeight="51.0" prefWidth="218.0" style="-fx-background-color: #75a478;" text="Signin" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
@@ -41,7 +42,6 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <JFXPasswordField fx:id="passwordLoginText" alignment="CENTER" focusColor="#75a478" layoutX="125.0" layoutY="418.0" prefHeight="25.0" prefWidth="250.0" promptText="Password" unFocusColor="BLACK" />
          </children>
       </AnchorPane>
    </children>
