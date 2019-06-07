@@ -4,16 +4,14 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import sample.Main;
+import javafx.scene.layout.AnchorPane;
+import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 
-import java.io.IOException;
-
 public class LoginController {
+
+    @FXML
+    private AnchorPane rootAnchorPane;
 
     @FXML
     private JFXTextField userNameLoginText;
@@ -29,30 +27,21 @@ public class LoginController {
 
     private DatabaseHandler databaseHandler;
 
+    private FadeInFadeOut fadeInFadeOut;
+
     @FXML
     void initialize(){
+        fadeInFadeOut = new FadeInFadeOut();
 
         databaseHandler = new DatabaseHandler();
 
+        String createUserScene = "/sample/view/create_user.fxml";
+
+        fadeInFadeOut.makeFadeIn(rootAnchorPane);
+
+        // load create user scene
         createNewUserButton.setOnAction(event -> {
-
-            createNewUserButton.getScene().getWindow().hide();
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/view/create_user.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle(Main.APP_NAME);
-            stage.getIcons().add(Main.appImage);
-            stage.showAndWait();
+            fadeInFadeOut.makeFadeOut(rootAnchorPane, createUserScene);
 
         });
 

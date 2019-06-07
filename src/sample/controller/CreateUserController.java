@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 import sample.model.User;
 
@@ -15,6 +17,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class CreateUserController {
+
+    @FXML
+    private AnchorPane rootAnchorPane;
 
     @FXML
     private JFXTextField createUserFirstName;
@@ -31,8 +36,12 @@ public class CreateUserController {
     @FXML
     private JFXButton createUserButton;
 
+    private FadeInFadeOut fadeInFadeOut;
+
     @FXML
     void initialize(){
+        fadeInFadeOut = new FadeInFadeOut();
+        fadeInFadeOut.makeFadeIn(rootAnchorPane);
 
         createUserButton.setOnAction(event -> {
             try {

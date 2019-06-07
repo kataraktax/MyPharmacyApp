@@ -28,10 +28,10 @@ public class DatabaseHandler extends Configs {
                 + "," + Const.USERS_USERNAME + "," + Const.USERS_PASSWORD + ")" + "VALUES(?,?,?,?)";
 
         PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
-        preparedStatement.setString(1,newUser.getFirstName());
-        preparedStatement.setString(2,newUser.getLastName());
-        preparedStatement.setString(3,newUser.getUserName());
-        preparedStatement.setString(4,newUser.getPassword());
+        preparedStatement.setString(1, newUser.getFirstName());
+        preparedStatement.setString(2, newUser.getLastName());
+        preparedStatement.setString(3, newUser.getUserName());
+        preparedStatement.setString(4, newUser.getPassword());
 
         preparedStatement.executeUpdate();
 
