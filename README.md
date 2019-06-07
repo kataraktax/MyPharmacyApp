@@ -6,7 +6,8 @@ Icons from https://icons8.com/icons
 To do:
 - Login panel - done
 - User creation panel - done
-- adding a user to the database - done
+- add a user to the database - done
+- add fadein and fadeout effect when scene is changing - done
 - main screen
 - medicine adding panel
 - adding medicines to the database
