@@ -1,12 +1,15 @@
 package sample.animation;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.Main;
@@ -52,5 +55,12 @@ public class FadeInFadeOut {
         fadeTransition.setFromValue(0);
         fadeTransition.setToValue(1);
         fadeTransition.play();
+    }
+
+    public void hideLabel(Label label){
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), event -> label.setVisible(false)));
+        timeline.play();
+
     }
 }

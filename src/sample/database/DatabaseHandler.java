@@ -2,10 +2,7 @@ package sample.database;
 
 import sample.model.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatabaseHandler extends Configs {
 
@@ -37,5 +34,20 @@ public class DatabaseHandler extends Configs {
 
     }
 
+    public ResultSet getUser(User user) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = null;
 
+        if (!user.getUserName().equals("") || (!user.getPassword().equals(""))){
+            String query = "SELECT * FROM " + Const.USERS_TABLE + " WHERE " + Const.USERS_USERNAME + "=?"
+                    + " AND " + Const.USERS_PASSWORD + "=?";
+
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, user.getUserName());
+            preparedStatement.setString(2, user.getPassword());
+
+            resultSet = preparedStatement.executeQuery();
+        }
+
+        return resultSet;
+    }
 }
