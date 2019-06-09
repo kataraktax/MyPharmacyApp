@@ -9,7 +9,7 @@
 
 <AnchorPane fx:id="rootAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainPanelController">
    <children>
-      <JFXListView layoutX="14.0" layoutY="156.0" prefHeight="730.0" prefWidth="625.0" />
+      <JFXListView fx:id="medicineList" layoutX="14.0" layoutY="156.0" prefHeight="730.0" prefWidth="625.0" />
       <AnchorPane prefHeight="90.0" prefWidth="1300.0" style="-fx-background-color: #5d99c6;">
          <children>
             <AnchorPane layoutX="967.0" layoutY="1.0" prefHeight="90.0" prefWidth="333.0" style="-fx-background-color: #90caf9;">
@@ -19,12 +19,12 @@
                         <Image url="@../assets/icon_profile.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="87.0" layoutY="29.0" prefHeight="21.0" prefWidth="234.0" text="firstName lastName" textFill="WHITE">
+                  <Label fx:id="profilePanelFullName" layoutX="87.0" layoutY="29.0" prefHeight="21.0" prefWidth="234.0" text="firstName lastName" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="87.0" layoutY="54.0" prefHeight="21.0" prefWidth="234.0" text="userName" textFill="WHITE">
+                  <Label fx:id="profilePanelUserName" layoutX="87.0" layoutY="54.0" prefHeight="21.0" prefWidth="234.0" text="userName" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -34,7 +34,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="43.0" fitWidth="50.0" layoutX="271.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profileEditButton" fitHeight="43.0" fitWidth="50.0" layoutX="271.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/icon_edit_profile.png" />
                      </image>
@@ -49,22 +49,22 @@
          </children></AnchorPane>
       <AnchorPane layoutY="90.0" prefHeight="35.0" prefWidth="1300.0" style="-fx-background-color: #90caf9;">
          <children>
-            <ImageView fitHeight="35.0" fitWidth="54.0" layoutX="33.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="addMedicine" fitHeight="35.0" fitWidth="54.0" layoutX="33.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/icon_add.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="35.0" fitWidth="54.0" layoutX="81.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="refreshMedicineList" fitHeight="35.0" fitWidth="54.0" layoutX="81.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/icon_refresh.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="35.0" fitWidth="54.0" layoutX="123.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="editMedicine" fitHeight="35.0" fitWidth="54.0" layoutX="123.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/icon_edit.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="35.0" fitWidth="54.0" layoutX="167.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="deleteMedicine" fitHeight="35.0" fitWidth="54.0" layoutX="167.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/icon_delate.png" />
                </image>

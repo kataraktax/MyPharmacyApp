@@ -50,4 +50,19 @@ public class DatabaseHandler extends Configs {
 
         return resultSet;
     }
+
+    public ResultSet getUserById(int id) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = null;
+
+        if (id >= 1){
+            String query = "SELECT * FROM " + Const.USERS_TABLE + " WHERE " + Const.USERS_ID + "=?";
+
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+        }
+
+        return resultSet;
+    }
 }
