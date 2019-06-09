@@ -62,8 +62,10 @@ public class MainPanelController {
             profilePanelUserName.setText(currentUser.getUserName());
         }
 
+        profileEditButton.setOnMouseClicked(event -> {
 
-
+            System.out.println(currentUser.getFirstName());
+        });
 
 
     }
