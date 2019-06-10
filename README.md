@@ -7,8 +7,9 @@ To do:
 - Login panel - done
 - User creation panel - done
 - add a user to the database - done
-- add fadein and fadeout effect when scene is changing - done
-- main screen
+- add fadein and fadeout effect when scene is changing, and other animations - done
+- CRUD for user database - done
+- main screen - done
 - medicine adding panel
 - adding medicines to the database
 - display list of medicines
