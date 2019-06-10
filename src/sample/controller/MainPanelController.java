@@ -1,12 +1,15 @@
 package sample.controller;
 
 import com.jfoenix.controls.JFXListView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
+import sample.model.Medicine;
 import sample.model.User;
 
 import java.io.IOException;
@@ -19,7 +22,9 @@ public class MainPanelController {
     private AnchorPane rootAnchorPane;
 
     @FXML
-    private JFXListView<?> medicineList;
+    private JFXListView<Medicine> medicineList;
+
+    private ObservableList<Medicine> medicines;
 
     @FXML
     private Label profilePanelFullName;
@@ -71,6 +76,20 @@ public class MainPanelController {
             profilePanelUserName.setText(currentUser.getUserName());
         }
 
+        medicines = FXCollections.observableArrayList();
+        ResultSet resultSet = databaseHandler.getMedicines();
+
+        while (resultSet.next()){
+            Medicine medicine = new Medicine();
+            medicine.setName(resultSet.getString("name"));
+            medicine.setDescription(resultSet.getString("description"));
+            medicine.setExpireDate(resultSet.getDate("expiredate"));
+
+            medicines.add(medicine);
+        }
+
+        medicineList.setItems(medicines);
+
         profileEditButton.setOnMouseClicked(event -> {
             try {
                 fadeInFadeOut.popupPanel(popupProfilePanel, profileEditScene, 390);
@@ -82,7 +101,7 @@ public class MainPanelController {
 
         addMedicine.setOnMouseClicked(event -> {
             try {
-                fadeInFadeOut.popupPanel(popupMedicinePanel, addMedicineScene, 425);
+                fadeInFadeOut.popupPanel(popupMedicinePanel, addMedicineScene, 479);
             } catch (IOException e) {
                 e.printStackTrace();
             }

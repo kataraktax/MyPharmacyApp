@@ -36,6 +36,7 @@ public class DatabaseHandler extends Configs {
     }
 
     public ResultSet getUser(User user) throws SQLException, ClassNotFoundException {
+
         ResultSet resultSet = null;
 
         if (!user.getUserName().equals("") || (!user.getPassword().equals(""))){
@@ -95,17 +96,30 @@ public class DatabaseHandler extends Configs {
         }
     }
 
-    public void addMedicine(Medicine medicine) throws SQLException {
+    public void addMedicine(Medicine medicine) throws SQLException, ClassNotFoundException {
 
         String query = "INSERT INTO " + Const.MEDICINES_TABLE + "(" + Const.MEDICINES_NAME + ","
                 + Const.MEDICINES_DESCRIPTION + "," + Const.MEDICINES_EXPIREDATE + ")"
                 + "VALUES(?,?,?)";
 
-        PreparedStatement preparedStatement = dbConnection.prepareStatement(query);
+        PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
         preparedStatement.setString(1, medicine.getName());
         preparedStatement.setString(2, medicine.getDescription());
         preparedStatement.setDate(3, medicine.getExpireDate());
 
         preparedStatement.executeUpdate();
+    }
+
+    public ResultSet getMedicines() throws SQLException, ClassNotFoundException {
+
+        ResultSet resultSet = null;
+
+        String query = "SELECT * FROM " + Const.MEDICINES_TABLE;
+
+        PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+
+        return resultSet;
+
     }
 }

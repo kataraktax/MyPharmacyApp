@@ -72,6 +72,6 @@
          </children>
       </AnchorPane>
       <AnchorPane fx:id="popupProfilePanel" layoutX="967.0" layoutY="-300.0" prefHeight="300.0" prefWidth="320.0" />
-      <AnchorPane fx:id="popupMedicinePanel" layoutX="14.0" layoutY="-300.0" prefHeight="300.0" prefWidth="320.0" />
+      <AnchorPane fx:id="popupMedicinePanel" layoutX="14.0" layoutY="-350.0" prefHeight="350.0" prefWidth="320.0" />
    </children>
 </AnchorPane>
