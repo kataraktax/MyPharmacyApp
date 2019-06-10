@@ -1,5 +1,7 @@
 package sample.database;
 
+import java.time.LocalDate;
+
 public class Const {
 
     // User Table Const
@@ -9,4 +11,11 @@ public class Const {
     public static final String USERS_LASTNAME = "lastname";
     public static final String USERS_USERNAME = "username";
     public static final String USERS_PASSWORD = "password";
+
+    // Medicine Table Const
+    public static final String MEDICINES_TABLE = "medicines";
+    public static final String MEDICINES_ID = "medicineid";
+    public static final String MEDICINES_NAME = "name";
+    public static final String MEDICINES_DESCRIPTION = "description";
+    public static final String MEDICINES_EXPIREDATE = "expiredate";
 }

@@ -1,5 +1,6 @@
 package sample.database;
 
+import sample.model.Medicine;
 import sample.model.User;
 
 import java.sql.*;
@@ -21,10 +22,10 @@ public class DatabaseHandler extends Configs {
 
     public void createUser(User newUser) throws SQLException, ClassNotFoundException {
 
-        String insert = "INSERT INTO " + Const.USERS_TABLE + "(" + Const.USERS_FIRSTNAME + "," + Const.USERS_LASTNAME
+        String query = "INSERT INTO " + Const.USERS_TABLE + "(" + Const.USERS_FIRSTNAME + "," + Const.USERS_LASTNAME
                 + "," + Const.USERS_USERNAME + "," + Const.USERS_PASSWORD + ")" + "VALUES(?,?,?,?)";
 
-        PreparedStatement preparedStatement = getDbConnection().prepareStatement(insert);
+        PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
         preparedStatement.setString(1, newUser.getFirstName());
         preparedStatement.setString(2, newUser.getLastName());
         preparedStatement.setString(3, newUser.getUserName());
@@ -64,5 +65,47 @@ public class DatabaseHandler extends Configs {
         }
 
         return resultSet;
+    }
+
+    public void updateUser(User user, int id) throws SQLException, ClassNotFoundException {
+
+        if (id >= 1){
+            String query = "UPDATE " + Const.USERS_TABLE + " SET " + Const.USERS_FIRSTNAME + " =? ," + Const.USERS_LASTNAME
+                    + " =? ," + Const.USERS_USERNAME + " =? ," +  Const.USERS_PASSWORD + " =? " + "WHERE "
+                    + Const.USERS_ID + " =?";
+
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setString(3, user.getUserName());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setInt(5,id);
+
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    public void deleteUser(int id) throws SQLException, ClassNotFoundException {
+        if (id >= 1){
+            String query = "DELETE FROM " + Const.USERS_TABLE + " WHERE " + Const.USERS_ID + "=?";
+
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    public void addMedicine(Medicine medicine) throws SQLException {
+
+        String query = "INSERT INTO " + Const.MEDICINES_TABLE + "(" + Const.MEDICINES_NAME + ","
+                + Const.MEDICINES_DESCRIPTION + "," + Const.MEDICINES_EXPIREDATE + ")"
+                + "VALUES(?,?,?)";
+
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, medicine.getName());
+        preparedStatement.setString(2, medicine.getDescription());
+        preparedStatement.setDate(3, medicine.getExpireDate());
+
+        preparedStatement.executeUpdate();
     }
 }

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static final Image appImage = new Image("sample/assets/icon_application.png");
+    public static final Image appImage = new Image("sample/assets/app_icon.png");
     public static final String APP_NAME = "Home Pharmacy Application";
 
     @Override

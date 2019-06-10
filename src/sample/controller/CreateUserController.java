@@ -4,16 +4,10 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 import sample.model.User;
-
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class CreateUserController {
@@ -37,26 +31,17 @@ public class CreateUserController {
     private JFXButton createUserButton;
 
     @FXML
-    void initialize(){
+    void initialize() {
         FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
         fadeInFadeOut.makeFadeIn(rootAnchorPane);
+
+        String loginScene = "/sample/view/login.fxml";
 
         createUserButton.setOnAction(event -> {
             try {
                 createUser();
-
-                createUserButton.getScene().getWindow().hide();
-
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/sample/view/login.fxml"));
-
-                loader.load();
-
-                Parent root = loader.getRoot();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.showAndWait();
-            } catch (SQLException | ClassNotFoundException | IOException e) {
+                fadeInFadeOut.makeFadeOut(rootAnchorPane, loginScene);
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         });

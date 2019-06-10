@@ -9,6 +9,7 @@ import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 import sample.model.User;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -41,14 +42,22 @@ public class MainPanelController {
     @FXML
     private ImageView deleteMedicine;
 
+    @FXML
+    private AnchorPane popupProfilePanel;
 
-
+    @FXML
+    private AnchorPane popupMedicinePanel;
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
         fadeInFadeOut.makeFadeIn(rootAnchorPane);
+
         User currentUser = new User();
+
+        String profileEditScene = "/sample/view/edit_profile.fxml";
+        String addMedicineScene = "/sample/view/add_medicine.fxml";
+
 
         DatabaseHandler databaseHandler = new DatabaseHandler();
         ResultSet userRow = databaseHandler.getUserById(LoginController.userId);
@@ -63,8 +72,21 @@ public class MainPanelController {
         }
 
         profileEditButton.setOnMouseClicked(event -> {
+            try {
+                fadeInFadeOut.popupPanel(popupProfilePanel, profileEditScene, 390);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            System.out.println(currentUser.getFirstName());
+        });
+
+        addMedicine.setOnMouseClicked(event -> {
+            try {
+                fadeInFadeOut.popupPanel(popupMedicinePanel, addMedicineScene, 425);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         });
 
 

@@ -1,15 +1,12 @@
 package sample.animation;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.animation.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.Main;
@@ -62,5 +59,20 @@ public class FadeInFadeOut {
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), event -> label.setVisible(false)));
         timeline.play();
 
+    }
+
+    public void popupPanel(AnchorPane pane, String resource, int endYValue) throws IOException {
+        AnchorPane formPane = FXMLLoader.load(getClass().getResource(resource));
+        pane.setVisible(true);
+        formPane.translateYProperty().set(-350.00);
+        pane.getChildren().setAll(formPane);
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        KeyValue keyValue = new KeyValue(formPane.translateYProperty(), endYValue, Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.5), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+
+        timeline.play();
     }
 }
