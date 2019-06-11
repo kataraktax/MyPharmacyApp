@@ -6,6 +6,7 @@ import java.sql.*;
 
 public class Medicine {
 
+    private int id;
     private String name;
     private String description;
     private java.sql.Date expireDate;
@@ -41,6 +42,14 @@ public class Medicine {
 
     public void setExpireDate(java.sql.Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

@@ -53,34 +53,23 @@ public class MainPanelController {
     @FXML
     private AnchorPane popupMedicinePanel;
 
+    private DatabaseHandler databaseHandler;
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
         fadeInFadeOut.makeFadeIn(rootAnchorPane);
 
-        User currentUser = new User();
-
         String profileEditScene = "/sample/view/edit_profile.fxml";
         String addMedicineScene = "/sample/view/add_medicine.fxml";
 
-
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        ResultSet userRow = databaseHandler.getUserById(LoginController.userId);
-
-        while (userRow.next()) {
-            currentUser.setFirstName(userRow.getString("firstname"));
-            currentUser.setLastName(userRow.getString("lastname"));
-            currentUser.setUserName(userRow.getString("username"));
-
-            profilePanelFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
-            profilePanelUserName.setText(currentUser.getUserName());
-        }
-
+        databaseHandler = new DatabaseHandler();
         medicines = FXCollections.observableArrayList();
         ResultSet resultSet = databaseHandler.getMedicines();
 
         while (resultSet.next()){
             Medicine medicine = new Medicine();
+            medicine.setId(resultSet.getInt("medicineid"));
             medicine.setName(resultSet.getString("name"));
             medicine.setDescription(resultSet.getString("description"));
             medicine.setExpireDate(resultSet.getDate("expiredate"));
@@ -89,6 +78,10 @@ public class MainPanelController {
         }
 
         medicineList.setItems(medicines);
+        medicineList.setCellFactory(CellController -> new CellController());
+
+        //refreshList();
+        updateProfilePanel();
 
         profileEditButton.setOnMouseClicked(event -> {
             try {
@@ -108,6 +101,48 @@ public class MainPanelController {
 
         });
 
+        refreshMedicineList.setOnMouseClicked(event -> {
+            try {
+                refreshList();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
 
+
+    }
+
+    public void refreshList() throws SQLException, ClassNotFoundException {
+        databaseHandler = new DatabaseHandler();
+        medicines = FXCollections.observableArrayList();
+        ResultSet resultSet = databaseHandler.getMedicines();
+
+        while (resultSet.next()){
+            Medicine medicine = new Medicine();
+            medicine.setId(resultSet.getInt("medicineid"));
+            medicine.setName(resultSet.getString("name"));
+            medicine.setDescription(resultSet.getString("description"));
+            medicine.setExpireDate(resultSet.getDate("expiredate"));
+
+            medicines.add(medicine);
+        }
+
+        medicineList.setItems(medicines);
+        medicineList.setCellFactory(CellController -> new CellController());
+    }
+
+    private void updateProfilePanel() throws SQLException, ClassNotFoundException {
+        databaseHandler = new DatabaseHandler();
+        User currentUser = new User();
+        ResultSet userRow = databaseHandler.getUserById(LoginController.userId);
+
+        while (userRow.next()) {
+            currentUser.setFirstName(userRow.getString("firstname"));
+            currentUser.setLastName(userRow.getString("lastname"));
+            currentUser.setUserName(userRow.getString("username"));
+
+            profilePanelFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+            profilePanelUserName.setText(currentUser.getUserName());
+        }
     }
 }

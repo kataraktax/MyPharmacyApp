@@ -9,10 +9,10 @@
 
 <AnchorPane fx:id="rootAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainPanelController">
    <children>
-      <JFXListView fx:id="medicineList" layoutX="14.0" layoutY="156.0" prefHeight="730.0" prefWidth="625.0" />
+      <JFXListView fx:id="medicineList" layoutX="15.0" layoutY="156.0" prefHeight="730.0" prefWidth="950.0" />
       <AnchorPane prefHeight="90.0" prefWidth="1300.0" style="-fx-background-color: #5d99c6;">
          <children>
-            <AnchorPane layoutX="967.0" layoutY="1.0" prefHeight="90.0" prefWidth="333.0" style="-fx-background-color: #90caf9;">
+            <AnchorPane layoutX="965.0" prefHeight="90.0" prefWidth="335.0" style="-fx-background-color: #90caf9;">
                <children>
                   <Label fx:id="profilePanelFullName" layoutX="16.0" layoutY="41.0" prefHeight="21.0" prefWidth="234.0" text="firstName lastName" textFill="WHITE">
                      <font>

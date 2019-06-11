@@ -3,6 +3,7 @@ package sample.database;
 import sample.model.Medicine;
 import sample.model.User;
 
+import java.lang.reflect.ParameterizedType;
 import java.sql.*;
 
 public class DatabaseHandler extends Configs {
@@ -121,5 +122,20 @@ public class DatabaseHandler extends Configs {
 
         return resultSet;
 
+    }
+
+    public void updateMedicine(){
+
+    }
+
+    public void deleteMedicine(int id) throws SQLException, ClassNotFoundException {
+        if (id >= 0){
+            String query = "DELETE FROM " + Const.MEDICINES_TABLE + " WHERE " + Const.MEDICINES_ID + "=?";
+
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+
+        }
     }
 }
