@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="350.0" prefWidth="420.0" style="-fx-background-color: #eceff1;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AddMedicineController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="350.0" prefWidth="420.0" style="-fx-background-color: #eceff1;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.EditMedicineController">
    <children>
       <JFXTextField fx:id="medicineName" focusColor="#75a478" layoutX="174.0" layoutY="103.0" prefHeight="25.0" prefWidth="232.0" unFocusColor="BLACK" />
       <Label layoutX="14.0" layoutY="106.0" prefHeight="20.0" prefWidth="142.0" text="Medicine Name">

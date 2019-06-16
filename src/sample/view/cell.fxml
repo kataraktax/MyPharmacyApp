@@ -6,19 +6,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="20.0" prefWidth="930.0" style="-fx-background-color: #5d99c6;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="20.0" prefWidth="930.0" style="-fx-background-color: #b3e5fc;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="medicineName" layoutX="20.0" prefHeight="20.0" prefWidth="145.0" style="-fx-background-color: #90caf9;" text="Label">
+      <Label fx:id="medicineName" layoutX="5.0" prefHeight="20.0" prefWidth="160.0" style="-fx-background-color: #e6ffff;" text="Label">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="medicineDescription" layoutX="170.0" prefHeight="20.0" prefWidth="275.0" style="-fx-background-color: #90caf9;" text="Label">
+      <Label fx:id="medicineDescription" layoutX="170.0" prefHeight="20.0" prefWidth="275.0" style="-fx-background-color: #e6ffff;" text="Label">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="expireDate" layoutX="450.0" prefHeight="20.0" prefWidth="150.0" style="-fx-background-color: #90caf9;" text="Label">
+      <Label fx:id="expireDate" layoutX="450.0" prefHeight="20.0" prefWidth="150.0" style="-fx-background-color: #e6ffff;" text="Label">
          <font>
             <Font size="14.0" />
          </font>
@@ -26,11 +26,6 @@
       <ImageView fx:id="delateButton" fitHeight="20.0" fitWidth="20.0" layoutX="910.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/delete_icon.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="editButton" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/edit_icon.png" />
          </image>
       </ImageView>
    </children>

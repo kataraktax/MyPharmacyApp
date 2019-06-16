@@ -1,12 +1,21 @@
 package sample.controller;
 
 import com.jfoenix.controls.JFXListView;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 import sample.model.Medicine;
@@ -22,7 +31,7 @@ public class MainPanelController {
     private AnchorPane rootAnchorPane;
 
     @FXML
-    private JFXListView<Medicine> medicineList;
+    public JFXListView<Medicine> medicineList;
 
     private ObservableList<Medicine> medicines;
 
@@ -62,12 +71,13 @@ public class MainPanelController {
 
         String profileEditScene = "/sample/view/edit_profile.fxml";
         String addMedicineScene = "/sample/view/add_medicine.fxml";
+        String editMedicineScene = "/sample/view/edit_medicine.fxml";
 
         databaseHandler = new DatabaseHandler();
         medicines = FXCollections.observableArrayList();
         ResultSet resultSet = databaseHandler.getMedicines();
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             Medicine medicine = new Medicine();
             medicine.setId(resultSet.getInt("medicineid"));
             medicine.setName(resultSet.getString("name"));
@@ -80,8 +90,9 @@ public class MainPanelController {
         medicineList.setItems(medicines);
         medicineList.setCellFactory(CellController -> new CellController());
 
-        //refreshList();
+
         updateProfilePanel();
+
 
         profileEditButton.setOnMouseClicked(event -> {
             try {
@@ -98,7 +109,6 @@ public class MainPanelController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         });
 
         refreshMedicineList.setOnMouseClicked(event -> {
@@ -109,7 +119,53 @@ public class MainPanelController {
             }
         });
 
+        editMedicine.setOnMouseClicked(event -> {
 
+            Medicine selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
+            AnchorPane pane = popupMedicinePanel;
+            AnchorPane formPane;
+            pane.setVisible(true);
+
+            try {
+                formPane = FXMLLoader.load(getClass().getResource(editMedicineScene));
+                pane.setVisible(true);
+                formPane.translateYProperty().set(-350.00);
+                pane.getChildren().setAll(formPane);
+
+                Timeline timeline = new Timeline();
+                timeline.setCycleCount(1);
+                KeyValue keyValue = new KeyValue(formPane.translateYProperty(), 479, Interpolator.EASE_IN);
+                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.5), keyValue);
+                timeline.getKeyFrames().add(keyFrame);
+                timeline.play();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource(editMedicineScene));
+//
+//            try {
+//                loader.load();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            Parent root = loader.getRoot();
+//            Stage stage = new Stage();
+//            stage.setScene(new Scene(root));
+//
+//            EditMedicineController editMedicineController = loader.getController();
+//            editMedicineController.getMedicineName().setPromptText(selectedMedicine.getName());
+//            editMedicineController.getMedicineDescription().setPromptText(selectedMedicine.getDescription());
+//            editMedicineController.getExpireDate().setPromptText(selectedMedicine.getExpireDate().toString());
+//            stage.show();
+
+        });
+
+    }
+
+    public MainPanelController() {
     }
 
     public void refreshList() throws SQLException, ClassNotFoundException {
@@ -117,7 +173,7 @@ public class MainPanelController {
         medicines = FXCollections.observableArrayList();
         ResultSet resultSet = databaseHandler.getMedicines();
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             Medicine medicine = new Medicine();
             medicine.setId(resultSet.getInt("medicineid"));
             medicine.setName(resultSet.getString("name"));
@@ -125,10 +181,11 @@ public class MainPanelController {
             medicine.setExpireDate(resultSet.getDate("expiredate"));
 
             medicines.add(medicine);
+            medicineList.setItems(medicines);
+            medicineList.setCellFactory(CellController -> new CellController());
         }
 
-        medicineList.setItems(medicines);
-        medicineList.setCellFactory(CellController -> new CellController());
+
     }
 
     private void updateProfilePanel() throws SQLException, ClassNotFoundException {

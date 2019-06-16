@@ -3,6 +3,7 @@ package sample.controller;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -40,6 +41,8 @@ public class AddMedicineController {
 
     @FXML
     private Label loginError;
+
+
 
     @FXML
     void initialize(){
