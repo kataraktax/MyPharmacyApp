@@ -91,9 +91,9 @@ public class AddMedicineController {
         LocalDate date = expireDate.getValue();
         java.sql.Date expire = java.sql.Date.valueOf(date);
 
-        Medicine medicine = new Medicine(name, description, expire);
+        Medicine tempMedicine = new Medicine(name, description, expire);
 
-        databaseHandler.addMedicine(medicine);
+        databaseHandler.addMedicine(tempMedicine);
 
     }
 

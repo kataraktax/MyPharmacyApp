@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,6 +25,7 @@ import sample.model.User;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 
 public class MainPanelController {
 
@@ -63,6 +65,8 @@ public class MainPanelController {
     private AnchorPane popupMedicinePanel;
 
     private DatabaseHandler databaseHandler;
+
+    public static Medicine selectedMedicine;
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
@@ -120,52 +124,13 @@ public class MainPanelController {
         });
 
         editMedicine.setOnMouseClicked(event -> {
-
-            Medicine selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
-            AnchorPane pane = popupMedicinePanel;
-            AnchorPane formPane;
-            pane.setVisible(true);
-
+            selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
             try {
-                formPane = FXMLLoader.load(getClass().getResource(editMedicineScene));
-                pane.setVisible(true);
-                formPane.translateYProperty().set(-350.00);
-                pane.getChildren().setAll(formPane);
-
-                Timeline timeline = new Timeline();
-                timeline.setCycleCount(1);
-                KeyValue keyValue = new KeyValue(formPane.translateYProperty(), 479, Interpolator.EASE_IN);
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.5), keyValue);
-                timeline.getKeyFrames().add(keyFrame);
-                timeline.play();
+                fadeInFadeOut.popupPanel(popupMedicinePanel, editMedicineScene, 479);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource(editMedicineScene));
-//
-//            try {
-//                loader.load();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            Parent root = loader.getRoot();
-//            Stage stage = new Stage();
-//            stage.setScene(new Scene(root));
-//
-//            EditMedicineController editMedicineController = loader.getController();
-//            editMedicineController.getMedicineName().setPromptText(selectedMedicine.getName());
-//            editMedicineController.getMedicineDescription().setPromptText(selectedMedicine.getDescription());
-//            editMedicineController.getExpireDate().setPromptText(selectedMedicine.getExpireDate().toString());
-//            stage.show();
-
         });
-
-    }
-
-    public MainPanelController() {
     }
 
     public void refreshList() throws SQLException, ClassNotFoundException {

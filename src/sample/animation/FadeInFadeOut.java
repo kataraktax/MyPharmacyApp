@@ -45,19 +45,6 @@ public class FadeInFadeOut {
 
     }
 
-    public void makeFadeOut(Node node) {
-        FadeTransition fadeTransition = new FadeTransition();
-        fadeTransition.setNode(node);
-        fadeTransition.setDuration(Duration.millis(1000));
-        fadeTransition.setFromValue(1);
-        fadeTransition.setToValue(0);
-        fadeTransition.play();
-    }
-
-    // makeFadeOut for editButton from main panel
-
-
-
     public void makeFadeIn(Node node){
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setNode(node);

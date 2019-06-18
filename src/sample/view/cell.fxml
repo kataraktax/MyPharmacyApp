@@ -8,17 +8,17 @@
 
 <AnchorPane fx:id="rootAnchorPane" prefHeight="20.0" prefWidth="930.0" style="-fx-background-color: #b3e5fc;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="medicineName" layoutX="5.0" prefHeight="20.0" prefWidth="160.0" style="-fx-background-color: #e6ffff;" text="Label">
+      <Label fx:id="medicineName" layoutX="5.0" prefHeight="20.0" prefWidth="160.0" style="-fx-background-color: #b3e5fc;" text="Label">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="medicineDescription" layoutX="170.0" prefHeight="20.0" prefWidth="275.0" style="-fx-background-color: #e6ffff;" text="Label">
+      <Label fx:id="medicineDescription" layoutX="170.0" prefHeight="20.0" prefWidth="275.0" style="-fx-background-color: #b3e5fc;" text="Label">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="expireDate" layoutX="450.0" prefHeight="20.0" prefWidth="150.0" style="-fx-background-color: #e6ffff;" text="Label">
+      <Label fx:id="expireDate" layoutX="450.0" prefHeight="20.0" prefWidth="150.0" style="-fx-background-color: #b3e5fc;" text="Label">
          <font>
             <Font size="14.0" />
          </font>

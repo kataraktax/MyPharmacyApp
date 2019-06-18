@@ -100,10 +100,8 @@ public class EditProfileController {
                 e.printStackTrace();
             }
         });
-
         cancelButton.setOnMouseClicked(event -> rootAnchorPane.setVisible(false));
         closePanel.setOnMouseClicked(event -> rootAnchorPane.setVisible(false));
-
         deleteUserButton.setOnMouseClicked(event -> {
             try {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -124,11 +122,7 @@ public class EditProfileController {
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
-
         });
 
-
     }
-
 }
