@@ -8,13 +8,17 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 import sample.model.Medicine;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class CellController extends JFXListCell<Medicine> {
@@ -67,7 +71,18 @@ public class CellController extends JFXListCell<Medicine> {
 
             medicineName.setText(medicine.getName());
             medicineDescription.setText(medicine.getDescription());
-            expireDate.setText(medicine.getExpireDate().toString());
+
+            LocalDate today = LocalDate.now();
+            if (medicine.getExpireDate().compareTo(java.sql.Date.valueOf(today)) < 0){
+                expireDate.setText(medicine.getExpireDate().toString());
+                expireDate.setTextFill(Color.RED);
+            } else if(medicine.getExpireDate().compareTo(java.sql.Date.valueOf(today)) == 0){
+                expireDate.setText(medicine.getExpireDate().toString());
+                expireDate.setTextFill(Color.YELLOW);
+            } else {
+                expireDate.setText(medicine.getExpireDate().toString());
+            }
+
 
             delateButton.setOnMouseClicked(event -> {
                 try {
@@ -90,7 +105,7 @@ public class CellController extends JFXListCell<Medicine> {
                     }
             });
 
-//            setText(null);
+            setText(null);
             setGraphic(rootAnchorPane);
 
         }

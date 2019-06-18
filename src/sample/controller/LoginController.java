@@ -3,8 +3,11 @@ package sample.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import sample.animation.FadeInFadeOut;
 import sample.animation.Shaker;
@@ -91,6 +94,49 @@ public class LoginController {
 
             }
 
+        });
+
+        passwordLoginText.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER" )){
+                if (userNameLoginText.getText().equals("") || passwordLoginText.getText().equals("")) {
+                    Shaker userNameShaker = new Shaker(userNameLoginText);
+                    Shaker passwordShaker = new Shaker(passwordLoginText);
+
+                    userNameShaker.shake();
+                    passwordShaker.shake();
+                    loginError.setText("Please provide User Name and Password");
+                    loginError.setVisible(true);
+                    fadeInFadeOut.hideLabel(loginError);
+                } else {
+                    String login = userNameLoginText.getText().trim();
+                    String password = passwordLoginText.getText().trim();
+
+                    User tempUser = new User();
+                    tempUser.setUserName(login);
+                    tempUser.setPassword(password);
+
+                    try {
+                        ResultSet userRow = databaseHandler.getUser(tempUser);
+                        if (userRow.next()) {
+                            userId = userRow.getInt("userid");
+                            fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene);
+                        } else {
+                            Shaker userNameShaker = new Shaker(userNameLoginText);
+                            Shaker passwordShaker = new Shaker(passwordLoginText);
+
+                            userNameShaker.shake();
+                            passwordShaker.shake();
+                            loginError.setText("Wrong username or password. Please try again...");
+                            loginError.setVisible(true);
+                            fadeInFadeOut.hideLabel(loginError);
+                        }
+
+                    } catch (SQLException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
         });
 
     }

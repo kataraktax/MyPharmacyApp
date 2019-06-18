@@ -54,7 +54,7 @@ public class Medicine {
 
     @Override
     public String toString() {
-        return "Medicine{" +
+        return "Medicine{" + "id='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", expireDate=" + expireDate +

@@ -124,16 +124,16 @@ public class DatabaseHandler extends Configs {
 
     }
 
-    public void updateMedicine(Medicine medicine) throws SQLException, ClassNotFoundException {
+    public void updateMedicine(Medicine medicine, int id) throws SQLException, ClassNotFoundException {
         String query = "UPDATE " + Const.MEDICINES_TABLE + " SET " + Const.MEDICINES_NAME + " =? ,"
                 + Const.MEDICINES_DESCRIPTION + " =? ," + Const.MEDICINES_EXPIREDATE + " =? " + "WHERE "
-                + Const.MEDICINES_NAME + " =?";
+                + Const.MEDICINES_ID + " =?";
 
         PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
         preparedStatement.setString(1, medicine.getName());
         preparedStatement.setString(2, medicine.getDescription());
         preparedStatement.setDate(3, medicine.getExpireDate());
-        preparedStatement.setString(4, medicine.getName());
+        preparedStatement.setInt(4, id);
 
         preparedStatement.executeUpdate();
     }

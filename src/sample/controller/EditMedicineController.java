@@ -59,6 +59,7 @@ public class EditMedicineController {
 
         confirmEditMedicineButton.setOnMouseClicked(event -> {
             Medicine tempMedicine = new Medicine();
+            tempMedicine.setId(MainPanelController.selectedMedicine.getId());
             if (!medicineName.getText().equals("")){
                 tempMedicine.setName(medicineName.getText().trim());
             } else {
@@ -71,14 +72,16 @@ public class EditMedicineController {
                 tempMedicine.setDescription(MainPanelController.selectedMedicine.getDescription());
             }
 
-            if (!expireDate.getValue().toString().equals("")){
-                LocalDate date = expireDate.getValue();
+            if (expireDate.getValue() != null){
+                LocalDate date = expireDate.getValue().plusDays(1);
                 tempMedicine.setExpireDate(java.sql.Date.valueOf(date));
             } else {
                 tempMedicine.setExpireDate(MainPanelController.selectedMedicine.getExpireDate());
             }
+            System.out.println(tempMedicine.toString());
             try {
-                databaseHandler.updateMedicine(tempMedicine);
+                int id = MainPanelController.selectedMedicine.getId();
+                databaseHandler.updateMedicine(tempMedicine, id);
                 rootAnchorPane.setVisible(false);
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();

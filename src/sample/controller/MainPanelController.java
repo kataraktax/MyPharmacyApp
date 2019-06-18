@@ -125,10 +125,12 @@ public class MainPanelController {
 
         editMedicine.setOnMouseClicked(event -> {
             selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
-            try {
-                fadeInFadeOut.popupPanel(popupMedicinePanel, editMedicineScene, 479);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (selectedMedicine != null) {
+                try {
+                    fadeInFadeOut.popupPanel(popupMedicinePanel, editMedicineScene, 479);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
