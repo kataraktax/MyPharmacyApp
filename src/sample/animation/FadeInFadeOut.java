@@ -61,7 +61,7 @@ public class FadeInFadeOut {
 
     }
 
-    public void popupPanel(AnchorPane pane, String resource, int endYValue) throws IOException {
+    public void popupYPanel(AnchorPane pane, String resource, int endYValue) throws IOException {
         AnchorPane formPane = FXMLLoader.load(getClass().getResource(resource));
         pane.setVisible(true);
         formPane.translateYProperty().set(-350.00);
@@ -72,7 +72,20 @@ public class FadeInFadeOut {
         KeyValue keyValue = new KeyValue(formPane.translateYProperty(), endYValue, Interpolator.EASE_IN);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.5), keyValue);
         timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+    }
 
+    public void popupXPanel(AnchorPane pane, String resource, int endXValue) throws IOException{
+        AnchorPane formPane = FXMLLoader.load(getClass().getResource(resource));
+        pane.setVisible(true);
+        formPane.translateXProperty().set(320);
+        pane.getChildren().setAll(formPane);
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        KeyValue keyValue = new KeyValue(formPane.translateXProperty(), endXValue, Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.5), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
         timeline.play();
     }
 }

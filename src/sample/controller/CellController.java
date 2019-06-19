@@ -10,13 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
-import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 import sample.model.Medicine;
-
-import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;

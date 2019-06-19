@@ -1,31 +1,24 @@
 package sample.controller;
 
 import com.jfoenix.controls.JFXListView;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+import javafx.stage.StageStyle;
 import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 import sample.model.Medicine;
+import sample.model.Treatment;
 import sample.model.User;
-
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.Optional;
 
 public class MainPanelController {
 
@@ -36,6 +29,11 @@ public class MainPanelController {
     public JFXListView<Medicine> medicineList;
 
     private ObservableList<Medicine> medicines;
+
+    @FXML
+    JFXListView<Treatment> treatmentList;
+
+    private ObservableList<Treatment> treatments;
 
     @FXML
     private Label profilePanelFullName;
@@ -64,78 +62,102 @@ public class MainPanelController {
     @FXML
     private AnchorPane popupMedicinePanel;
 
+    @FXML
+    private ImageView addTreatment;
+
+    @FXML
+    private ImageView refreshTreatmentList;
+
+    @FXML
+    private ImageView editTreatment;
+
+    @FXML
+    private ImageView deleteTreatment;
+
+    @FXML
+    private AnchorPane popupTreatmentPanel;
+
     private DatabaseHandler databaseHandler;
 
-    public static Medicine selectedMedicine;
+    static Medicine selectedMedicine;
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
         fadeInFadeOut.makeFadeIn(rootAnchorPane);
-
+        // resource scene strings
         String profileEditScene = "/sample/view/edit_profile.fxml";
         String addMedicineScene = "/sample/view/add_medicine.fxml";
         String editMedicineScene = "/sample/view/edit_medicine.fxml";
+        String addTreatmentScene = "/sample/view/add_treatment.fxml";
 
-        databaseHandler = new DatabaseHandler();
-        medicines = FXCollections.observableArrayList();
-        ResultSet resultSet = databaseHandler.getMedicines();
-
-        while (resultSet.next()) {
-            Medicine medicine = new Medicine();
-            medicine.setId(resultSet.getInt("medicineid"));
-            medicine.setName(resultSet.getString("name"));
-            medicine.setDescription(resultSet.getString("description"));
-            medicine.setExpireDate(resultSet.getDate("expiredate"));
-
-            medicines.add(medicine);
-        }
-
-        medicineList.setItems(medicines);
-        medicineList.setCellFactory(CellController -> new CellController());
-
-
+        // prepare main panel to work
+        refreshMedicineList();
         updateProfilePanel();
-
 
         profileEditButton.setOnMouseClicked(event -> {
             try {
-                fadeInFadeOut.popupPanel(popupProfilePanel, profileEditScene, 390);
+                fadeInFadeOut.popupYPanel(popupProfilePanel, profileEditScene, 429);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         });
-
         addMedicine.setOnMouseClicked(event -> {
             try {
-                fadeInFadeOut.popupPanel(popupMedicinePanel, addMedicineScene, 479);
+                fadeInFadeOut.popupYPanel(popupMedicinePanel, addMedicineScene, 479);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-
         refreshMedicineList.setOnMouseClicked(event -> {
             try {
-                refreshList();
+                refreshMedicineList();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         });
-
         editMedicine.setOnMouseClicked(event -> {
             selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
             if (selectedMedicine != null) {
                 try {
-                    fadeInFadeOut.popupPanel(popupMedicinePanel, editMedicineScene, 479);
+                    fadeInFadeOut.popupYPanel(popupMedicinePanel, editMedicineScene, 479);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
-    }
+        deleteMedicine.setOnMouseClicked(event -> {
+            selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
+            if (selectedMedicine != null) {
+                try {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Delete Medicine from List Confirmation");
+                    alert.setHeaderText("Please confirm do you want to continue and delete medicine: " + selectedMedicine.getName());
+                    alert.initStyle(StageStyle.UTILITY);
+                    alert.setContentText("If you want to delete this Medicine from List press OK in other case please press CANCEL");
 
-    public void refreshList() throws SQLException, ClassNotFoundException {
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        databaseHandler.deleteMedicine(selectedMedicine.getId());
+                        refreshMedicineList();
+                    } else {
+                        alert.close();
+                    }
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        addTreatment.setOnMouseClicked(event -> {
+            try {
+                fadeInFadeOut.popupYPanel(popupTreatmentPanel, addTreatmentScene, 369);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    private void refreshMedicineList() throws SQLException, ClassNotFoundException {
         databaseHandler = new DatabaseHandler();
         medicines = FXCollections.observableArrayList();
         ResultSet resultSet = databaseHandler.getMedicines();
@@ -151,10 +173,7 @@ public class MainPanelController {
             medicineList.setItems(medicines);
             medicineList.setCellFactory(CellController -> new CellController());
         }
-
-
     }
-
     private void updateProfilePanel() throws SQLException, ClassNotFoundException {
         databaseHandler = new DatabaseHandler();
         User currentUser = new User();

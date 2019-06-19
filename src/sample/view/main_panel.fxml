@@ -9,34 +9,49 @@
 
 <AnchorPane fx:id="rootAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainPanelController">
    <children>
-      <JFXListView fx:id="medicineList" layoutX="15.0" layoutY="156.0" prefHeight="730.0" prefWidth="940.0" />
+      <JFXListView fx:id="medicineList" layoutX="15.0" layoutY="156.0" prefHeight="730.0" prefWidth="620.0" />
       <AnchorPane prefHeight="90.0" prefWidth="1300.0" style="-fx-background-color: #5d99c6;">
          <children>
-            <AnchorPane layoutX="965.0" prefHeight="90.0" prefWidth="335.0" style="-fx-background-color: #90caf9;">
+            <AnchorPane layoutX="965.0" prefHeight="129.0" prefWidth="335.0" style="-fx-background-color: #90caf9;">
                <children>
-                  <Label fx:id="profilePanelFullName" layoutX="16.0" layoutY="41.0" prefHeight="21.0" prefWidth="234.0" text="firstName lastName" textFill="WHITE">
+                  <Label fx:id="profilePanelFullName" layoutX="121.0" layoutY="80.0" prefHeight="21.0" prefWidth="200.0" text="firstName lastName" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="profilePanelUserName" layoutX="16.0" layoutY="62.0" prefHeight="21.0" prefWidth="234.0" text="userName" textFill="WHITE">
+                  <Label fx:id="profilePanelUserName" layoutX="121.0" layoutY="100.0" prefHeight="21.0" prefWidth="200.0" text="userName" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="185.0" text="Profile Information" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="51.0" prefHeight="27.0" prefWidth="185.0" text="Profile Information" textFill="WHITE">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="187.0" layoutY="14.0" prefHeight="27.0" prefWidth="127.0" text="Settings" textFill="WHITE">
+                  <Label layoutX="215.0" layoutY="11.0" prefHeight="27.0" prefWidth="71.0" text="Settings" textFill="WHITE">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="profileEditButton" fitHeight="35.0" fitWidth="50.0" layoutX="271.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profileEditButton" fitHeight="35.0" fitWidth="50.0" layoutX="286.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/settings_icon.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="14.0" layoutY="80.0" prefHeight="17.0" prefWidth="71.0" text="Name:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="100.0" prefHeight="20.0" prefWidth="98.0" text="User Name:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/profile_icon.png" />
                      </image>
                   </ImageView>
                </children>
@@ -47,31 +62,72 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <AnchorPane layoutY="90.0" prefHeight="35.0" prefWidth="1300.0" style="-fx-background-color: #90caf9;">
+      <Label layoutX="15.0" layoutY="129.0" prefHeight="27.0" prefWidth="280.0" text="Medicine Database">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="640.0" layoutY="156.0" prefHeight="730.0" prefWidth="650.0">
          <children>
-            <ImageView fx:id="addMedicine" fitHeight="35.0" fitWidth="54.0" layoutX="33.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <Label layoutX="35.0" layoutY="4.0" prefHeight="20.0" prefWidth="280.0" text="Treatment Database">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <JFXListView layoutX="35.0" layoutY="43.0" prefHeight="389.0" prefWidth="610.0" />
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="-6.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/add_to_treatment_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="addTreatment" fitHeight="35.0" fitWidth="54.0" layoutX="234.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/add_icon.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="refreshMedicineList" fitHeight="35.0" fitWidth="54.0" layoutX="81.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="refreshTreatmentList" fitHeight="35.0" fitWidth="54.0" layoutX="284.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/refresh_icon.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="editMedicine" fitHeight="35.0" fitWidth="54.0" layoutX="123.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="editTreatment" fitHeight="35.0" fitWidth="54.0" layoutX="334.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/edit_icon.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="deleteMedicine" fitHeight="35.0" fitWidth="54.0" layoutX="167.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="deleteTreatment" fitHeight="35.0" fitWidth="54.0" layoutX="384.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/remove_icon.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="popupProfilePanel" layoutX="967.0" layoutY="-300.0" prefHeight="300.0" prefWidth="320.0" />
+      <AnchorPane layoutY="90.0" prefHeight="39.0" prefWidth="965.0" style="-fx-background-color: #90caf9;">
+         <children>
+            <ImageView fx:id="addMedicine" fitHeight="35.0" fitWidth="54.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/add_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="refreshMedicineList" fitHeight="35.0" fitWidth="54.0" layoutX="64.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/refresh_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="editMedicine" fitHeight="35.0" fitWidth="54.0" layoutX="114.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/edit_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="deleteMedicine" fitHeight="35.0" fitWidth="54.0" layoutX="164.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/remove_icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
       <AnchorPane fx:id="popupMedicinePanel" layoutX="14.0" layoutY="-350.0" prefHeight="350.0" prefWidth="320.0" />
+      <AnchorPane fx:id="popupProfilePanel" layoutX="965.0" layoutY="-300.0" prefHeight="300.0" prefWidth="320.0" />
+      <AnchorPane fx:id="popupTreatmentPanel" layoutX="640.0" layoutY="-240.0" prefHeight="240.0" prefWidth="320.0" />
    </children>
 </AnchorPane>
