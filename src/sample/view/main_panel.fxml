@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -9,7 +10,7 @@
 
 <AnchorPane fx:id="rootAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainPanelController">
    <children>
-      <JFXListView fx:id="medicineList" layoutX="15.0" layoutY="156.0" prefHeight="730.0" prefWidth="620.0" />
+      <JFXListView fx:id="medicineList" layoutX="15.0" layoutY="171.0" prefHeight="715.0" prefWidth="620.0" />
       <AnchorPane prefHeight="90.0" prefWidth="1300.0" style="-fx-background-color: #5d99c6;">
          <children>
             <AnchorPane layoutX="965.0" prefHeight="129.0" prefWidth="335.0" style="-fx-background-color: #90caf9;">
@@ -62,44 +63,90 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <Label layoutX="15.0" layoutY="129.0" prefHeight="27.0" prefWidth="280.0" text="Medicine Database">
+      <Label layoutX="15.0" layoutY="129.0" prefHeight="40.0" prefWidth="280.0" text="Medicine Database">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Label>
       <AnchorPane layoutX="640.0" layoutY="156.0" prefHeight="730.0" prefWidth="650.0">
          <children>
-            <Label layoutX="35.0" layoutY="4.0" prefHeight="20.0" prefWidth="280.0" text="Treatment Database">
+            <Label layoutX="81.0" prefHeight="35.0" prefWidth="235.0" text="Treatment Database">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <JFXListView layoutX="35.0" layoutY="43.0" prefHeight="389.0" prefWidth="610.0" />
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="-6.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
+            <JFXListView layoutX="356.0" layoutY="137.0" prefHeight="350.0" prefWidth="292.0" />
+            <ImageView fx:id="addMedicineToTreatment" fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/add_to_treatment_icon.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="addTreatment" fitHeight="35.0" fitWidth="54.0" layoutX="234.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="addTreatment" fitHeight="30.0" fitWidth="50.0" layoutX="356.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/add_icon.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="refreshTreatmentList" fitHeight="35.0" fitWidth="54.0" layoutX="284.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="refreshTreatmentList" fitHeight="30.0" fitWidth="50.0" layoutX="416.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/refresh_icon.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="editTreatment" fitHeight="35.0" fitWidth="54.0" layoutX="334.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="editTreatment" fitHeight="30.0" fitWidth="50.0" layoutX="476.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/edit_icon.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="deleteTreatment" fitHeight="35.0" fitWidth="54.0" layoutX="384.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="deleteTreatment" fitHeight="30.0" fitWidth="50.0" layoutX="536.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/remove_icon.png" />
                </image>
             </ImageView>
+            <Label layoutX="81.0" layoutY="44.0" prefHeight="20.0" prefWidth="222.0" text="Select Treatment from Database">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="treatmentComboBox" focusColor="#75a478" layoutX="356.0" layoutY="42.0" prefHeight="25.0" prefWidth="242.0" promptText="Select Treatment..." unFocusColor="BLACK" />
+            <Label layoutX="356.0" layoutY="100.0" prefHeight="20.0" prefWidth="292.0" text="List of medicines added to selected treatment">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="81.0" layoutY="100.0" prefHeight="20.0" prefWidth="138.0" text="Treatment start date:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="treatmentDateLabel" layoutX="219.0" layoutY="102.0" prefHeight="17.0" prefWidth="131.0" text="Label">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="81.0" layoutY="135.0" prefHeight="20.0" prefWidth="138.0" text="Treatment duration:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="81.0" layoutY="170.0" prefHeight="20.0" prefWidth="138.0" text="Treatment end date:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="treatmentDurationLabel" layoutX="219.0" layoutY="135.0" prefHeight="20.0" prefWidth="89.0" text="Duration">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="endDateLabel" layoutX="219.0" layoutY="170.0" prefHeight="20.0" prefWidth="89.0" text="end date">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="87.0" layoutY="325.0" prefHeight="81.0" prefWidth="222.0" text="To add medicine to treatment, first select medicine that you want to add. Then selecte treatment from database  and click blue arrow." textAlignment="JUSTIFY" wrapText="true">
+               <font>
+                  <Font name="System Italic" size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutY="90.0" prefHeight="39.0" prefWidth="965.0" style="-fx-background-color: #90caf9;">

@@ -18,4 +18,13 @@ public class Const {
     public static final String MEDICINES_NAME = "name";
     public static final String MEDICINES_DESCRIPTION = "description";
     public static final String MEDICINES_EXPIREDATE = "expiredate";
+    public static final String MEDICINES_TREATMENTID = "treatmentid";
+
+    // Treatment Table Const
+    public static final String TREATMENTS_TABLE = "treatments";
+    public static final String TREATMENTS_ID = "treatmentid";
+    public static final String TREATMENTS_USERID = "userid";
+    public static final String TREATMENTS_NAME = "treatmentname";
+    public static final String TREATMENTS_STARTDATE = "startdate";
+    public static final String TREATMENTS_DURATION = "duration";
 }

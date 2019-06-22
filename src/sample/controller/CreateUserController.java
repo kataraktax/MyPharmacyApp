@@ -68,6 +68,7 @@ public class CreateUserController {
                 fadeInFadeOut.hideLabel(loginError);
             }
         });
+        fadeInFadeOut.hoverOverButtonEffects(createUserButton);
     }
 
     private void createUser() throws SQLException, ClassNotFoundException {

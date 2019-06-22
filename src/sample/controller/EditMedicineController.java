@@ -53,9 +53,11 @@ public class EditMedicineController {
         medicineDescription.setPromptText(MainPanelController.selectedMedicine.getDescription());
         expireDate.setPromptText(MainPanelController.selectedMedicine.getExpireDate().toString());
 
-        cancelEditMedicineButton.setOnMouseClicked(event -> rootAnchorPane.setVisible(false));
+        cancelEditMedicineButton.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        fadeInFadeOut.hoverOverIconEffects(cancelEditMedicineButton);
 
-        closePanel.setOnMouseClicked(event -> rootAnchorPane.setVisible(false));
+        closePanel.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        fadeInFadeOut.hoverOverIconEffects(closePanel);
 
         confirmEditMedicineButton.setOnMouseClicked(event -> {
             Medicine tempMedicine = new Medicine();
@@ -82,11 +84,12 @@ public class EditMedicineController {
             try {
                 int id = MainPanelController.selectedMedicine.getId();
                 databaseHandler.updateMedicine(tempMedicine, id);
-                rootAnchorPane.setVisible(false);
+                fadeInFadeOut.popupPanelFadeOut(rootAnchorPane);
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         });
+        fadeInFadeOut.hoverOverIconEffects(confirmEditMedicineButton);
     }
 }
 

@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
+import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 import sample.model.Medicine;
 import java.io.IOException;
@@ -100,6 +101,8 @@ public class CellController extends JFXListCell<Medicine> {
                         e.printStackTrace();
                     }
             });
+            FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
+            fadeInFadeOut.hoverOverIconEffects(delateButton);
 
             setText(null);
             setGraphic(rootAnchorPane);

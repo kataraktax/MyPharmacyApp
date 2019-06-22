@@ -95,13 +95,16 @@ public class EditProfileController {
 
             try {
                 databaseHandler.updateUser(tempUser, LoginController.userId);
-                rootAnchorPane.setVisible(false);
+                fadeInFadeOut.popupPanelFadeOut(rootAnchorPane);
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         });
-        cancelButton.setOnMouseClicked(event -> rootAnchorPane.setVisible(false));
-        closePanel.setOnMouseClicked(event -> rootAnchorPane.setVisible(false));
+        fadeInFadeOut.hoverOverIconEffects(updateButton);
+        cancelButton.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        fadeInFadeOut.hoverOverIconEffects(cancelButton);
+        closePanel.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        fadeInFadeOut.hoverOverIconEffects(closePanel);
         deleteUserButton.setOnMouseClicked(event -> {
             try {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -123,6 +126,6 @@ public class EditProfileController {
                 e.printStackTrace();
             }
         });
-
+        fadeInFadeOut.hoverOverIconEffects(deleteUserButton);
     }
 }

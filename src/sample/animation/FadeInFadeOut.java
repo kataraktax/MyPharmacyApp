@@ -1,12 +1,16 @@
 package sample.animation;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.Main;
@@ -75,6 +79,15 @@ public class FadeInFadeOut {
         timeline.play();
     }
 
+    public void popupPanelFadeOut(Node node){
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setNode(node);
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.play();
+    }
+
     public void popupXPanel(AnchorPane pane, String resource, int endXValue) throws IOException{
         AnchorPane formPane = FXMLLoader.load(getClass().getResource(resource));
         pane.setVisible(true);
@@ -87,5 +100,25 @@ public class FadeInFadeOut {
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.5), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
+    }
+
+    public void hoverOverIconEffects(ImageView imageView){
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
+        imageView.setOnMouseEntered(event -> imageView.setEffect(dropShadow));
+        imageView.setOnMouseExited(event -> imageView.setEffect(null));
+    }
+
+    public void hoverOverButtonEffects(JFXButton button){
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
+        button.setOnMouseEntered(event -> button.setEffect(dropShadow));
+        button.setOnMouseExited(event -> button.setEffect(null));
     }
 }

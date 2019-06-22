@@ -1,6 +1,7 @@
 package sample.database;
 
 import sample.model.Medicine;
+import sample.model.Treatment;
 import sample.model.User;
 
 import java.lang.reflect.ParameterizedType;
@@ -57,7 +58,7 @@ public class DatabaseHandler extends Configs {
     public ResultSet getUserById(int id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = null;
 
-        if (id >= 1){
+        if (id > 0){
             String query = "SELECT * FROM " + Const.USERS_TABLE + " WHERE " + Const.USERS_ID + "=?";
 
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
@@ -147,5 +148,46 @@ public class DatabaseHandler extends Configs {
             preparedStatement.executeUpdate();
 
         }
+    }
+
+    public void createTreatment(Treatment treatment, int userId) throws SQLException, ClassNotFoundException {
+        String query = "INSERT INTO " + Const.TREATMENTS_TABLE + "(" + Const.TREATMENTS_USERID + ","
+                + Const.TREATMENTS_NAME + "," + Const.TREATMENTS_STARTDATE + ","
+                + Const.TREATMENTS_DURATION + ")" + "VALUES(?,?,?,?)";
+
+        PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setString(2, treatment.getName());
+        preparedStatement.setDate(3, treatment.getStartDate());
+        preparedStatement.setInt(4, treatment.getDuration());
+
+        preparedStatement.executeUpdate();
+    }
+
+    public ResultSet getTreatmentsByUserId(int userId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = null;
+        if (userId > 0) {
+            String query = "SELECT " + Const.TREATMENTS_NAME + " FROM " + Const.TREATMENTS_TABLE
+                    + " WHERE " + Const.TREATMENTS_USERID + "=?";
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+            resultSet = preparedStatement.executeQuery();
+        }
+
+        return resultSet;
+    }
+
+    public ResultSet getTreatmentByName(String name) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = null;
+        if (!name.equals("")){
+            String query = "SELECT " + Const.TREATMENTS_ID + "," + Const.TREATMENTS_STARTDATE
+                    + "," + Const.TREATMENTS_DURATION + " FROM " + Const.TREATMENTS_TABLE + " WHERE "
+                    + Const.TREATMENTS_NAME + "=?";
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setString(1, name);
+            resultSet = preparedStatement.executeQuery();
+        }
+
+        return resultSet;
     }
 }

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="240.0" prefWidth="320.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AddTreatmentController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="320.0" prefWidth="320.0" style="-fx-background-color: #eceff1;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AddTreatmentController">
    <children>
       <JFXTextField fx:id="treatmentName" focusColor="#75a478" layoutX="128.0" layoutY="124.0" prefHeight="25.0" prefWidth="170.0" unFocusColor="BLACK" />
       <Label layoutX="18.0" layoutY="130.0" prefHeight="17.0" prefWidth="123.0" text="Name">
@@ -15,14 +15,14 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="20.0" layoutY="56.0" prefHeight="65.0" prefWidth="280.0" text="Please provide treatment name: " wrapText="true">
+      <Label layoutX="20.0" layoutY="56.0" prefHeight="33.0" prefWidth="280.0" text="Please provide treatment name: " wrapText="true">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <AnchorPane prefHeight="56.0" prefWidth="320.0" style="-fx-background-color: #5d99c6;">
+      <AnchorPane prefHeight="55.0" prefWidth="320.0" style="-fx-background-color: #5d99c6;">
          <children>
-            <Label alignment="CENTER" layoutX="19.0" layoutY="21.0" prefHeight="17.0" prefWidth="280.0" text="Profile Settings" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="19.0" layoutY="21.0" prefHeight="17.0" prefWidth="280.0" text="Create new Treatment" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -34,20 +34,26 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <ImageView fx:id="addTreatmentButton" fitHeight="40.0" fitWidth="40.0" layoutX="81.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="addTreatmentButton" fitHeight="40.0" fitWidth="40.0" layoutX="110.0" layoutY="248.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/confirm_icon.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="cancelButton" fitHeight="40.0" fitWidth="40.0" layoutX="141.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cancelButton" fitHeight="40.0" fitWidth="40.0" layoutX="170.0" layoutY="248.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/cancel_icon.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="deleteUserButton" fitHeight="40.0" fitWidth="40.0" layoutX="199.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../assets/remove_icon.png" />
-         </image>
-      </ImageView>
+      <Label fx:id="loginError" alignment="CENTER" layoutX="-1.0" layoutY="103.0" prefHeight="17.0" prefWidth="303.0" text="Please, make sure all fields are filled" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="18.0" layoutY="190.0" prefHeight="17.0" prefWidth="123.0" text="Duration:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="treatmentDuration" focusColor="#75a478" layoutX="128.0" layoutY="188.0" prefHeight="25.0" prefWidth="170.0" promptText="in days..." unFocusColor="BLACK" />
    </children>
 </AnchorPane>

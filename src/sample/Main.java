@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static final Image appImage = new Image("sample/assets/app_icon.png");
-    public static final String APP_NAME = "Home Pharmacy Application";
+    public static final String APP_NAME = "Home Pharmacy App";
 
     @Override
     public void start(Stage primaryStage) throws Exception{

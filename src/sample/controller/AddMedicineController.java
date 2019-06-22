@@ -3,7 +3,6 @@ package sample.controller;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -53,15 +52,16 @@ public class AddMedicineController {
 
 
 
-        cancelAddMedicineButton.setOnMouseClicked(event -> rootAnchorPane.setVisible(false));
+        cancelAddMedicineButton.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        fadeInFadeOut.hoverOverIconEffects(cancelAddMedicineButton);
 
-        closePanel.setOnMouseClicked(event -> rootAnchorPane.setVisible(false));
-
+        closePanel.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        fadeInFadeOut.hoverOverIconEffects(closePanel);
         confirmAddMedicineButton.setOnMouseClicked(event -> {
-            if (!medicineName.getText().equals("") && !medicineDescription.getText().equals("") && !expireDate.getValue().equals("")) {
+            if (!medicineName.getText().equals("") && !medicineDescription.getText().equals("") && !expireDate.getValue().toString().equals("")) {
                 try {
                     addMedicine();
-                    rootAnchorPane.setVisible(false);
+                    fadeInFadeOut.popupPanelFadeOut(rootAnchorPane);
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -78,7 +78,7 @@ public class AddMedicineController {
                 fadeInFadeOut.hideLabel(loginError);
             }
         });
-
+        fadeInFadeOut.hoverOverIconEffects(confirmAddMedicineButton);
 
     }
 

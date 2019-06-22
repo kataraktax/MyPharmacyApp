@@ -1,11 +1,13 @@
 package sample.controller;
 
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -18,73 +20,67 @@ import sample.model.User;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class MainPanelController {
-
     @FXML
     private AnchorPane rootAnchorPane;
-
     @FXML
     public JFXListView<Medicine> medicineList;
-
     private ObservableList<Medicine> medicines;
-
     @FXML
     JFXListView<Treatment> treatmentList;
-
     private ObservableList<Treatment> treatments;
-
     @FXML
     private Label profilePanelFullName;
-
     @FXML
     private Label profilePanelUserName;
-
     @FXML
     private ImageView profileEditButton;
-
     @FXML
     private ImageView addMedicine;
-
     @FXML
     private ImageView refreshMedicineList;
-
     @FXML
     private ImageView editMedicine;
-
     @FXML
     private ImageView deleteMedicine;
-
     @FXML
     private AnchorPane popupProfilePanel;
-
     @FXML
     private AnchorPane popupMedicinePanel;
-
+    @FXML
+    private Label treatmentDateLabel;
+    @FXML
+    private Label treatmentDurationLabel;
+    @FXML
+    private Label endDateLabel;
     @FXML
     private ImageView addTreatment;
-
     @FXML
     private ImageView refreshTreatmentList;
-
     @FXML
     private ImageView editTreatment;
-
     @FXML
     private ImageView deleteTreatment;
-
+    @FXML
+    private ImageView addMedicineToTreatment;
+    @FXML
+    private ComboBox<String> treatmentComboBox;
+    private ObservableList<String> comboBoxNames;
     @FXML
     private AnchorPane popupTreatmentPanel;
-
     private DatabaseHandler databaseHandler;
-
     static Medicine selectedMedicine;
-
+    static Treatment selectedTreatment;
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
         fadeInFadeOut.makeFadeIn(rootAnchorPane);
+
+        comboBoxNames = FXCollections.observableArrayList();
+
         // resource scene strings
         String profileEditScene = "/sample/view/edit_profile.fxml";
         String addMedicineScene = "/sample/view/add_medicine.fxml";
@@ -94,6 +90,7 @@ public class MainPanelController {
         // prepare main panel to work
         refreshMedicineList();
         updateProfilePanel();
+        updateComboBox();
 
         profileEditButton.setOnMouseClicked(event -> {
             try {
@@ -103,6 +100,7 @@ public class MainPanelController {
             }
 
         });
+        fadeInFadeOut.hoverOverIconEffects(profileEditButton);
         addMedicine.setOnMouseClicked(event -> {
             try {
                 fadeInFadeOut.popupYPanel(popupMedicinePanel, addMedicineScene, 479);
@@ -110,6 +108,7 @@ public class MainPanelController {
                 e.printStackTrace();
             }
         });
+        fadeInFadeOut.hoverOverIconEffects(addMedicine);
         refreshMedicineList.setOnMouseClicked(event -> {
             try {
                 refreshMedicineList();
@@ -117,6 +116,7 @@ public class MainPanelController {
                 e.printStackTrace();
             }
         });
+        fadeInFadeOut.hoverOverIconEffects(refreshMedicineList);
         editMedicine.setOnMouseClicked(event -> {
             selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
             if (selectedMedicine != null) {
@@ -127,6 +127,7 @@ public class MainPanelController {
                 }
             }
         });
+        fadeInFadeOut.hoverOverIconEffects(editMedicine);
         deleteMedicine.setOnMouseClicked(event -> {
             selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
             if (selectedMedicine != null) {
@@ -149,6 +150,7 @@ public class MainPanelController {
                 }
             }
         });
+        fadeInFadeOut.hoverOverIconEffects(deleteMedicine);
         addTreatment.setOnMouseClicked(event -> {
             try {
                 fadeInFadeOut.popupYPanel(popupTreatmentPanel, addTreatmentScene, 369);
@@ -156,6 +158,38 @@ public class MainPanelController {
                 e.printStackTrace();
             }
         });
+        fadeInFadeOut.hoverOverIconEffects(addTreatment);
+        treatmentComboBox.setOnAction(event -> {
+            databaseHandler = new DatabaseHandler();
+            selectedTreatment = new Treatment();
+            String selectedItemComboBox = treatmentComboBox.getSelectionModel().getSelectedItem();
+            if (!selectedItemComboBox.equals("")) {
+                try {
+                    ResultSet resultSet = databaseHandler.getTreatmentByName(selectedItemComboBox);
+                    while (resultSet.next()) {
+                        selectedTreatment.setId(resultSet.getInt("treatmentid"));
+                        selectedTreatment.setName(selectedItemComboBox);
+                        selectedTreatment.setStartDate(resultSet.getDate("startdate"));
+                        selectedTreatment.setDuration(resultSet.getInt("duration"));
+                        if (selectedTreatment != null){
+                            treatmentDateLabel.setText(selectedTreatment.getStartDate().toString());
+                            treatmentDurationLabel.setText(String.valueOf(selectedTreatment.getDuration()));
+                            LocalDate endDate = LocalDate.now().plusDays(selectedTreatment.getDuration());
+                            endDateLabel.setText(endDate.toString());
+                        }
+                    }
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        addMedicineToTreatment.setOnMouseClicked(event -> {
+            selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
+            String selectedItemComboBox = treatmentComboBox.getSelectionModel().getSelectedItem();
+
+
+        });
+
     }
     private void refreshMedicineList() throws SQLException, ClassNotFoundException {
         databaseHandler = new DatabaseHandler();
@@ -187,5 +221,19 @@ public class MainPanelController {
             profilePanelFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
             profilePanelUserName.setText(currentUser.getUserName());
         }
+    }
+    private void updateComboBox() throws SQLException, ClassNotFoundException {
+        databaseHandler = new DatabaseHandler();
+        Treatment tempTreatment = new Treatment();
+
+        ResultSet resultSet = databaseHandler.getTreatmentsByUserId(LoginController.userId);
+
+        while (resultSet.next()) {
+            tempTreatment.setName(resultSet.getString("treatmentname"));
+            if (!tempTreatment.getName().equals("")) {
+                comboBoxNames.add(tempTreatment.getName());
+            }
+        }
+        treatmentComboBox.setItems(comboBoxNames);
     }
 }

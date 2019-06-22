@@ -3,11 +3,8 @@ package sample.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import sample.animation.FadeInFadeOut;
 import sample.animation.Shaker;
@@ -52,6 +49,7 @@ public class LoginController {
 
         // load create user scene
         createNewUserButton.setOnAction(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, createUserScene));
+        fadeInFadeOut.hoverOverButtonEffects(createNewUserButton);
 
         loginButton.setOnAction(event -> {
 
@@ -93,9 +91,8 @@ public class LoginController {
                 }
 
             }
-
         });
-
+        fadeInFadeOut.hoverOverButtonEffects(loginButton);
         passwordLoginText.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("ENTER" )){
                 if (userNameLoginText.getText().equals("") || passwordLoginText.getText().equals("")) {
