@@ -21,7 +21,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class MainPanelController {
     @FXML
@@ -30,9 +32,6 @@ public class MainPanelController {
     public JFXListView<Medicine> medicineList;
     private ObservableList<Medicine> medicines;
     @FXML
-    JFXListView<Treatment> treatmentList;
-    private ObservableList<Treatment> treatments;
-    @FXML
     private Label profilePanelFullName;
     @FXML
     private Label profilePanelUserName;
@@ -40,8 +39,6 @@ public class MainPanelController {
     private ImageView profileEditButton;
     @FXML
     private ImageView addMedicine;
-    @FXML
-    private ImageView refreshMedicineList;
     @FXML
     private ImageView editMedicine;
     @FXML
@@ -57,18 +54,15 @@ public class MainPanelController {
     @FXML
     private Label endDateLabel;
     @FXML
-    private ImageView addTreatment;
+    private Label daysToEndLabel;
     @FXML
-    private ImageView refreshTreatmentList;
+    private ImageView addTreatment;
     @FXML
     private ImageView editTreatment;
     @FXML
     private ImageView deleteTreatment;
     @FXML
-    private ImageView addMedicineToTreatment;
-    @FXML
     private ComboBox<String> treatmentComboBox;
-    private ObservableList<String> comboBoxNames;
     @FXML
     private AnchorPane popupTreatmentPanel;
     private DatabaseHandler databaseHandler;
@@ -77,9 +71,6 @@ public class MainPanelController {
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
-        fadeInFadeOut.makeFadeIn(rootAnchorPane);
-
-        comboBoxNames = FXCollections.observableArrayList();
 
         // resource scene strings
         String profileEditScene = "/sample/view/edit_profile.fxml";
@@ -109,14 +100,6 @@ public class MainPanelController {
             }
         });
         fadeInFadeOut.hoverOverIconEffects(addMedicine);
-        refreshMedicineList.setOnMouseClicked(event -> {
-            try {
-                refreshMedicineList();
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        });
-        fadeInFadeOut.hoverOverIconEffects(refreshMedicineList);
         editMedicine.setOnMouseClicked(event -> {
             selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
             if (selectedMedicine != null) {
@@ -174,20 +157,20 @@ public class MainPanelController {
                         if (selectedTreatment != null){
                             treatmentDateLabel.setText(selectedTreatment.getStartDate().toString());
                             treatmentDurationLabel.setText(String.valueOf(selectedTreatment.getDuration()));
-                            LocalDate endDate = LocalDate.now().plusDays(selectedTreatment.getDuration());
+                            LocalDate startDate = selectedTreatment.getStartDate().toLocalDate();
+                            LocalDate endDate = startDate.plusDays(selectedTreatment.getDuration());
                             endDateLabel.setText(endDate.toString());
+                            LocalDate today = LocalDate.now();
+                            String daysToEnd = String.valueOf(today.until(endDate, ChronoUnit.DAYS));
+                            daysToEndLabel.setText(daysToEnd);
                         }
                     }
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+            } else {
+
             }
-        });
-        addMedicineToTreatment.setOnMouseClicked(event -> {
-            selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
-            String selectedItemComboBox = treatmentComboBox.getSelectionModel().getSelectedItem();
-
-
         });
 
     }
@@ -202,6 +185,10 @@ public class MainPanelController {
             medicine.setName(resultSet.getString("name"));
             medicine.setDescription(resultSet.getString("description"));
             medicine.setExpireDate(resultSet.getDate("expiredate"));
+            medicine.setHeadache(resultSet.getInt("headache"));
+            medicine.setFever(resultSet.getInt("fever"));
+            medicine.setCold(resultSet.getInt("cold"));
+            medicine.setCough(resultSet.getInt("cough"));
 
             medicines.add(medicine);
             medicineList.setItems(medicines);
@@ -225,15 +212,26 @@ public class MainPanelController {
     private void updateComboBox() throws SQLException, ClassNotFoundException {
         databaseHandler = new DatabaseHandler();
         Treatment tempTreatment = new Treatment();
+        ObservableList<String> comboBoxNames = FXCollections.observableArrayList();
 
         ResultSet resultSet = databaseHandler.getTreatmentsByUserId(LoginController.userId);
 
         while (resultSet.next()) {
             tempTreatment.setName(resultSet.getString("treatmentname"));
             if (!tempTreatment.getName().equals("")) {
+
                 comboBoxNames.add(tempTreatment.getName());
+
             }
         }
         treatmentComboBox.setItems(comboBoxNames);
+        if (selectedTreatment != null){
+            treatmentComboBox.getSelectionModel().select(selectedTreatment.getName());
+            treatmentDateLabel.setText(selectedTreatment.getStartDate().toString());
+            treatmentDurationLabel.setText(String.valueOf(selectedTreatment.getDuration()));
+            LocalDate endDate = LocalDate.now().plusDays(selectedTreatment.getDuration());
+            endDateLabel.setText(endDate.toString());
+        }
+
     }
 }

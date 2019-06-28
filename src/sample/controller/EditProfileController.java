@@ -1,5 +1,6 @@
 package sample.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
@@ -46,6 +47,9 @@ public class EditProfileController {
     private ImageView deleteUserButton;
 
     @FXML
+    private JFXButton changeUserButton;
+
+    @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
         FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
@@ -54,6 +58,7 @@ public class EditProfileController {
         DatabaseHandler databaseHandler = new DatabaseHandler();
 
         String loginScene = "/sample/view/login.fxml";
+        String mainPanelScene = "/sample/view/main_panel.fxml";
 
         User currentUser = new User();
         ResultSet userRow = databaseHandler.getUserById(LoginController.userId);
@@ -95,15 +100,15 @@ public class EditProfileController {
 
             try {
                 databaseHandler.updateUser(tempUser, LoginController.userId);
-                fadeInFadeOut.popupPanelFadeOut(rootAnchorPane);
+                fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene);
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         });
         fadeInFadeOut.hoverOverIconEffects(updateButton);
-        cancelButton.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        cancelButton.setOnMouseClicked(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene));
         fadeInFadeOut.hoverOverIconEffects(cancelButton);
-        closePanel.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        closePanel.setOnMouseClicked(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene));
         fadeInFadeOut.hoverOverIconEffects(closePanel);
         deleteUserButton.setOnMouseClicked(event -> {
             try {
@@ -127,5 +132,8 @@ public class EditProfileController {
             }
         });
         fadeInFadeOut.hoverOverIconEffects(deleteUserButton);
+
+        changeUserButton.setOnAction(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, loginScene));
+        fadeInFadeOut.hoverOverButtonEffects(changeUserButton);
     }
 }

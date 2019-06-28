@@ -25,7 +25,7 @@ public class FadeInFadeOut {
     public void makeFadeOut(Node node, String nextScene) {
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setNode(node);
-        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setDuration(Duration.seconds(1.5));
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.setOnFinished(event -> {
@@ -52,8 +52,8 @@ public class FadeInFadeOut {
     public void makeFadeIn(Node node){
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setNode(node);
-        fadeTransition.setDuration(Duration.millis(1000));
-        fadeTransition.setFromValue(0);
+        fadeTransition.setDuration(Duration.seconds(1.5));
+        fadeTransition.setFromValue(0.5);
         fadeTransition.setToValue(1);
         fadeTransition.play();
     }
@@ -74,29 +74,6 @@ public class FadeInFadeOut {
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
         KeyValue keyValue = new KeyValue(formPane.translateYProperty(), endYValue, Interpolator.EASE_IN);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.5), keyValue);
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.play();
-    }
-
-    public void popupPanelFadeOut(Node node){
-        FadeTransition fadeTransition = new FadeTransition();
-        fadeTransition.setNode(node);
-        fadeTransition.setDuration(Duration.millis(1000));
-        fadeTransition.setFromValue(1);
-        fadeTransition.setToValue(0);
-        fadeTransition.play();
-    }
-
-    public void popupXPanel(AnchorPane pane, String resource, int endXValue) throws IOException{
-        AnchorPane formPane = FXMLLoader.load(getClass().getResource(resource));
-        pane.setVisible(true);
-        formPane.translateXProperty().set(320);
-        pane.getChildren().setAll(formPane);
-
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(1);
-        KeyValue keyValue = new KeyValue(formPane.translateXProperty(), endXValue, Interpolator.EASE_IN);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.5), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();

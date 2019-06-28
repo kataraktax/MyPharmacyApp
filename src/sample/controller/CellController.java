@@ -1,5 +1,6 @@
 package sample.controller;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +35,18 @@ public class CellController extends JFXListCell<Medicine> {
 
     @FXML
     private ImageView delateButton;
+
+    @FXML
+    private JFXCheckBox headacheBox;
+
+    @FXML
+    private JFXCheckBox feverBox;
+
+    @FXML
+    private JFXCheckBox coldBox;
+
+    @FXML
+    private JFXCheckBox coughBox;
 
     private FXMLLoader fxmlLoaderCell;
 
@@ -73,11 +86,32 @@ public class CellController extends JFXListCell<Medicine> {
             if (medicine.getExpireDate().compareTo(java.sql.Date.valueOf(today)) < 0){
                 expireDate.setText(medicine.getExpireDate().toString());
                 expireDate.setTextFill(Color.RED);
-            } else if(medicine.getExpireDate().compareTo(java.sql.Date.valueOf(today)) == 0){
-                expireDate.setText(medicine.getExpireDate().toString());
-                expireDate.setTextFill(Color.YELLOW);
             } else {
                 expireDate.setText(medicine.getExpireDate().toString());
+            }
+            if (medicine.getHeadache() == 1){
+                headacheBox.setSelected(true);
+                headacheBox.setDisable(true);
+            }else {
+                headacheBox.setDisable(true);
+            }
+            if (medicine.getFever() == 1){
+                feverBox.setSelected(true);
+                feverBox.setDisable(true);
+            } else {
+                feverBox.setDisable(true);
+            }
+            if (medicine.getCold() == 1){
+                coldBox.setSelected(true);
+                coldBox.setDisable(true);
+            } else {
+                coldBox.setDisable(true);
+            }
+            if (medicine.getCough() == 1){
+                coughBox.setSelected(true);
+                coughBox.setDisable(true);
+            } else {
+                coughBox.setDisable(true);
             }
 
 

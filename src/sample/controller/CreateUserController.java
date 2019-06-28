@@ -36,6 +36,9 @@ public class CreateUserController {
     private Label loginError;
 
     @FXML
+    private JFXButton backButton;
+
+    @FXML
     void initialize() {
         FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
         fadeInFadeOut.makeFadeIn(rootAnchorPane);
@@ -69,6 +72,9 @@ public class CreateUserController {
             }
         });
         fadeInFadeOut.hoverOverButtonEffects(createUserButton);
+
+        backButton.setOnAction(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, loginScene));
+        fadeInFadeOut.hoverOverButtonEffects(backButton);
     }
 
     private void createUser() throws SQLException, ClassNotFoundException {

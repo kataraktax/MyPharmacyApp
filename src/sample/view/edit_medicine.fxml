@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -10,20 +11,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="350.0" prefWidth="420.0" style="-fx-background-color: #eceff1;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.EditMedicineController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="420.0" prefWidth="420.0" style="-fx-background-color: #eceff1;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.EditMedicineController">
    <children>
-      <JFXTextField fx:id="medicineName" focusColor="#75a478" layoutX="174.0" layoutY="103.0" prefHeight="25.0" prefWidth="232.0" unFocusColor="BLACK" />
-      <Label layoutX="14.0" layoutY="106.0" prefHeight="20.0" prefWidth="142.0" text="Medicine Name">
+      <JFXTextField fx:id="medicineName" focusColor="#75a478" layoutX="174.0" layoutY="94.0" prefHeight="20.0" prefWidth="232.0" unFocusColor="BLACK" />
+      <Label layoutX="14.0" layoutY="96.0" prefHeight="20.0" prefWidth="142.0" text="Medicine Name">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="142.0" prefHeight="20.0" prefWidth="142.0" text="Medicine Description">
+      <Label layoutX="14.0" layoutY="128.0" prefHeight="20.0" prefWidth="142.0" text="Medicine Description">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="76.0" prefHeight="27.0" prefWidth="260.0" text="Please fill in all fields" wrapText="true">
+      <Label layoutX="14.0" layoutY="67.0" prefHeight="27.0" prefWidth="260.0" text="Please fill all fields" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>
@@ -45,27 +46,36 @@
             <Point3D />
          </rotationAxis>
       </AnchorPane>
-      <JFXTextArea fx:id="medicineDescription" focusColor="#75a478" layoutX="174.0" layoutY="142.0" prefHeight="28.0" prefWidth="232.0" promptText="Please provide medicine description..." wrapText="true" />
-      <Label layoutX="19.0" layoutY="244.0" prefHeight="35.0" prefWidth="208.0" text="Expire Date: (dd.mm.yyyy)" textAlignment="JUSTIFY" wrapText="true">
+      <JFXTextArea fx:id="medicineDescription" focusColor="#75a478" layoutX="174.0" layoutY="121.0" prefHeight="20.0" prefWidth="232.0" promptText="Please provide medicine description..." wrapText="true" />
+      <Label layoutX="14.0" layoutY="172.0" prefHeight="35.0" prefWidth="180.0" text="Expire Date: (dd.mm.yyyy)" textAlignment="JUSTIFY" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <JFXDatePicker fx:id="expireDate" defaultColor="#75a478" layoutX="214.0" layoutY="248.0" prefHeight="28.0" prefWidth="180.0" />
-      <ImageView fx:id="confirmEditMedicineButton" fitHeight="50.0" fitWidth="50.0" layoutX="160.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+      <JFXDatePicker fx:id="expireDate" defaultColor="#75a478" layoutX="226.0" layoutY="176.0" prefHeight="28.0" prefWidth="180.0" />
+      <ImageView fx:id="confirmEditMedicineButton" fitHeight="50.0" fitWidth="50.0" layoutX="160.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/confirm_icon.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="cancelEditMedicineButton" fitHeight="50.0" fitWidth="50.0" layoutX="210.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cancelEditMedicineButton" fitHeight="50.0" fitWidth="50.0" layoutX="210.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/cancel_icon.png" />
          </image>
       </ImageView>
-      <Label fx:id="loginError" alignment="CENTER" layoutX="62.0" layoutY="205.0" prefHeight="17.0" prefWidth="303.0" text="Please, make sure all fields are filled" textFill="RED">
+      <Label fx:id="loginError" alignment="CENTER" layoutX="59.0" layoutY="219.0" prefHeight="17.0" prefWidth="303.0" text="Please, make sure all above fields are filled" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Label alignment="CENTER" layoutX="66.0" layoutY="257.0" prefHeight="27.0" prefWidth="290.0" text="Uses, check the appropriate boxes">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXCheckBox fx:id="headacheBox" layoutX="85.0" layoutY="297.0" prefHeight="20.0" prefWidth="100.0" text="Headache" />
+      <JFXCheckBox fx:id="feverBox" layoutX="85.0" layoutY="327.0" prefHeight="18.0" prefWidth="98.0" text="Fever" />
+      <JFXCheckBox fx:id="coldBox" layoutX="275.0" layoutY="297.0" prefHeight="18.0" prefWidth="98.0" text="Cold" />
+      <JFXCheckBox fx:id="coughBox" layoutX="275.0" layoutY="327.0" prefHeight="18.0" prefWidth="98.0" text="Cough" />
    </children>
 </AnchorPane>

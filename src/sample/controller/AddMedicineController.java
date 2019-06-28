@@ -1,5 +1,6 @@
 package sample.controller;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -41,7 +42,17 @@ public class AddMedicineController {
     @FXML
     private Label loginError;
 
+    @FXML
+    private JFXCheckBox headacheBox;
 
+    @FXML
+    private JFXCheckBox feverBox;
+
+    @FXML
+    private JFXCheckBox coldBox;
+
+    @FXML
+    private JFXCheckBox coughBox;
 
     @FXML
     void initialize(){
@@ -50,18 +61,20 @@ public class AddMedicineController {
 
         loginError.setVisible(false);
 
+        String mainPanelScene = "/sample/view/main_panel.fxml";
 
 
-        cancelAddMedicineButton.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        cancelAddMedicineButton.setOnMouseClicked(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene));
         fadeInFadeOut.hoverOverIconEffects(cancelAddMedicineButton);
 
-        closePanel.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        closePanel.setOnMouseClicked(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene));
         fadeInFadeOut.hoverOverIconEffects(closePanel);
+
         confirmAddMedicineButton.setOnMouseClicked(event -> {
             if (!medicineName.getText().equals("") && !medicineDescription.getText().equals("") && !expireDate.getValue().toString().equals("")) {
                 try {
                     addMedicine();
-                    fadeInFadeOut.popupPanelFadeOut(rootAnchorPane);
+                    fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene);
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -79,20 +92,38 @@ public class AddMedicineController {
             }
         });
         fadeInFadeOut.hoverOverIconEffects(confirmAddMedicineButton);
-
     }
 
     private void addMedicine() throws SQLException, ClassNotFoundException {
 
         DatabaseHandler databaseHandler = new DatabaseHandler();
+        Medicine tempMedicine = new Medicine();
 
-        String name = medicineName.getText().trim();
-        String description = medicineDescription.getText().trim();
+        tempMedicine.setName(medicineName.getText().trim());
+        tempMedicine.setDescription(medicineDescription.getText().trim());
         LocalDate date = expireDate.getValue();
-        java.sql.Date expire = java.sql.Date.valueOf(date);
+        tempMedicine.setExpireDate(java.sql.Date.valueOf(date));
 
-        Medicine tempMedicine = new Medicine(name, description, expire);
-
+        if (headacheBox.isSelected()){
+            tempMedicine.setHeadache(1);
+        } else {
+            tempMedicine.setHeadache(0);
+        }
+        if (feverBox.isSelected()){
+            tempMedicine.setFever(1);
+        } else{
+            tempMedicine.setFever(0);
+        }
+        if (coldBox.isSelected()){
+            tempMedicine.setCold(1);
+        } else {
+            tempMedicine.setCold(0);
+        }
+        if (coughBox.isSelected()){
+            tempMedicine.setCough(1);
+        } else {
+            tempMedicine.setCough(0);
+        }
         databaseHandler.addMedicine(tempMedicine);
 
     }

@@ -18,7 +18,10 @@ public class Const {
     public static final String MEDICINES_NAME = "name";
     public static final String MEDICINES_DESCRIPTION = "description";
     public static final String MEDICINES_EXPIREDATE = "expiredate";
-    public static final String MEDICINES_TREATMENTID = "treatmentid";
+    public static final String MEDICINES_HEADACHE = "headache";
+    public static final String MEDICINES_FEVER = "fever";
+    public static final String MEDICINES_COLD = "cold";
+    public static final String MEDICINES_COUGH = "cough";
 
     // Treatment Table Const
     public static final String TREATMENTS_TABLE = "treatments";

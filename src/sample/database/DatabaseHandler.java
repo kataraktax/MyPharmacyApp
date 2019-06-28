@@ -101,13 +101,18 @@ public class DatabaseHandler extends Configs {
     public void addMedicine(Medicine medicine) throws SQLException, ClassNotFoundException {
 
         String query = "INSERT INTO " + Const.MEDICINES_TABLE + "(" + Const.MEDICINES_NAME + ","
-                + Const.MEDICINES_DESCRIPTION + "," + Const.MEDICINES_EXPIREDATE + ")"
-                + "VALUES(?,?,?)";
+                + Const.MEDICINES_DESCRIPTION + "," + Const.MEDICINES_EXPIREDATE + "," + Const.MEDICINES_HEADACHE
+                + "," + Const.MEDICINES_FEVER + "," + Const.MEDICINES_COLD + "," + Const.MEDICINES_COUGH +")"
+                + "VALUES(?,?,?,?,?,?,?)";
 
         PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
         preparedStatement.setString(1, medicine.getName());
         preparedStatement.setString(2, medicine.getDescription());
         preparedStatement.setDate(3, medicine.getExpireDate());
+        preparedStatement.setInt(4, medicine.getHeadache());
+        preparedStatement.setInt(5, medicine.getFever());
+        preparedStatement.setInt(6, medicine.getCold());
+        preparedStatement.setInt(7, medicine.getCough());
 
         preparedStatement.executeUpdate();
     }
@@ -127,14 +132,20 @@ public class DatabaseHandler extends Configs {
 
     public void updateMedicine(Medicine medicine, int id) throws SQLException, ClassNotFoundException {
         String query = "UPDATE " + Const.MEDICINES_TABLE + " SET " + Const.MEDICINES_NAME + " =? ,"
-                + Const.MEDICINES_DESCRIPTION + " =? ," + Const.MEDICINES_EXPIREDATE + " =? " + "WHERE "
+                + Const.MEDICINES_DESCRIPTION + " =? ," + Const.MEDICINES_EXPIREDATE + " =? ,"
+                + Const.MEDICINES_HEADACHE + " =? ," + Const.MEDICINES_FEVER + " =? ," + Const.MEDICINES_COLD + " =? ,"
+                + Const.MEDICINES_COUGH + " =? " + " WHERE "
                 + Const.MEDICINES_ID + " =?";
 
         PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
         preparedStatement.setString(1, medicine.getName());
         preparedStatement.setString(2, medicine.getDescription());
         preparedStatement.setDate(3, medicine.getExpireDate());
-        preparedStatement.setInt(4, id);
+        preparedStatement.setInt(4, medicine.getHeadache());
+        preparedStatement.setInt(5,medicine.getFever());
+        preparedStatement.setInt(6, medicine.getCold());
+        preparedStatement.setInt(7, medicine.getCough());
+        preparedStatement.setInt(8, id);
 
         preparedStatement.executeUpdate();
     }

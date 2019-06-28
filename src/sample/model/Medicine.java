@@ -10,14 +10,23 @@ public class Medicine {
     private String name;
     private String description;
     private java.sql.Date expireDate;
+    private int headache;
+    private int fever;
+    private int cold;
+    private int cough;
 
     public Medicine() {
     }
 
-    public Medicine(String name, String description, java.sql.Date expireDate) {
+    public Medicine(int id, String name, String description, java.sql.Date expireDate, int headache, int fever, int cold, int cough) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.expireDate = expireDate;
+        this.headache = headache;
+        this.fever = fever;
+        this.cold = cold;
+        this.cough = cough;
     }
 
     public String getName() {
@@ -50,6 +59,38 @@ public class Medicine {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getHeadache() {
+        return headache;
+    }
+
+    public void setHeadache(int headache) {
+        this.headache = headache;
+    }
+
+    public int getFever() {
+        return fever;
+    }
+
+    public void setFever(int fever) {
+        this.fever = fever;
+    }
+
+    public int getCold() {
+        return cold;
+    }
+
+    public void setCold(int cold) {
+        this.cold = cold;
+    }
+
+    public int getCough() {
+        return cough;
+    }
+
+    public void setCough(int cough) {
+        this.cough = cough;
     }
 
     @Override

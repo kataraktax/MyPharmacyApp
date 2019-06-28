@@ -43,11 +43,12 @@ public class AddTreatmentController {
         fadeInFadeOut.makeFadeIn(rootAnchorPane);
 
         loginError.setVisible(false);
+        String mainPanelScene = "/sample/view/main_panel.fxml";
 
-        cancelButton.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        cancelButton.setOnMouseClicked(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene));
         fadeInFadeOut.hoverOverIconEffects(cancelButton);
 
-        closePanel.setOnMouseClicked(event -> fadeInFadeOut.popupPanelFadeOut(rootAnchorPane));
+        closePanel.setOnMouseClicked(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene));
         fadeInFadeOut.hoverOverIconEffects(closePanel);
 
         addTreatmentButton.setOnMouseClicked(event -> {
@@ -56,7 +57,7 @@ public class AddTreatmentController {
                 if (Integer.parseInt(durationText) > 0){
                     try {
                         addTreatment();
-                        fadeInFadeOut.popupPanelFadeOut(rootAnchorPane);
+                        fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene);
                     } catch (SQLException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
