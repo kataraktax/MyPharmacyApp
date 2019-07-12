@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public class CellController extends JFXListCell<Medicine> {
+public class MedicinesCellController extends JFXListCell<Medicine> {
 
     @FXML
     private AnchorPane rootAnchorPane;
@@ -69,7 +69,7 @@ public class CellController extends JFXListCell<Medicine> {
             setGraphic(null);
         } else {
             if (fxmlLoaderCell == null){
-                fxmlLoaderCell = new FXMLLoader(getClass().getResource("/sample/view/cell.fxml"));
+                fxmlLoaderCell = new FXMLLoader(getClass().getResource("/sample/view/medicines_cell.fxml"));
                 fxmlLoaderCell.setController(this);
 
                 try {
@@ -83,7 +83,7 @@ public class CellController extends JFXListCell<Medicine> {
             medicineDescription.setText(medicine.getDescription());
 
             LocalDate today = LocalDate.now();
-            if (medicine.getExpireDate().compareTo(java.sql.Date.valueOf(today)) < 0){
+            if (medicine.getExpireDate().compareTo(java.sql.Date.valueOf(today)) <= 0){
                 expireDate.setText(medicine.getExpireDate().toString());
                 expireDate.setTextFill(Color.RED);
             } else {

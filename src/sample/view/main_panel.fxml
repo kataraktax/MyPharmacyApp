@@ -10,6 +10,41 @@
 
 <AnchorPane fx:id="rootAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainPanelController">
    <children>
+      <Label layoutX="32.0" layoutY="185.0" prefHeight="20.0" prefWidth="98.0" text="Medicine Name">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="175.0" layoutY="185.0" prefHeight="20.0" prefWidth="115.0" text="Medicine Description">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="395.0" layoutY="185.0" prefHeight="20.0" prefWidth="115.0" text="Expire Date">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="500.0" layoutY="175.0" prefHeight="20.0" prefWidth="62.0" rotate="-45.0" text="Headache">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="537.0" layoutY="175.0" prefHeight="20.0" prefWidth="62.0" rotate="-45.0" text="Fever">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="574.0" layoutY="175.0" prefHeight="20.0" prefWidth="62.0" rotate="-45.0" text="Cold">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="612.0" layoutY="175.0" prefHeight="20.0" prefWidth="58.0" rotate="-45.0" text="Cough">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
       <JFXListView fx:id="medicineList" layoutX="15.0" layoutY="218.0" prefHeight="668.0" prefWidth="760.0" />
       <AnchorPane prefHeight="90.0" prefWidth="1300.0" style="-fx-background-color: #5d99c6;">
          <children>
@@ -20,7 +55,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="profilePanelUserName" layoutX="121.0" layoutY="100.0" prefHeight="21.0" prefWidth="200.0" text="userName" textFill="WHITE">
+                  <Label fx:id="profilePanelUserName" layoutX="120.0" layoutY="100.0" prefHeight="21.0" prefWidth="200.0" text="userName" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -55,11 +90,21 @@
                         <Image url="@../assets/profile_icon.png" />
                      </image>
                   </ImageView>
+                  <ImageView fx:id="changeUser" fitHeight="40.0" fitWidth="40.0" layoutX="284.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/change-user-icon.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
             <Label layoutX="14.0" layoutY="11.0" prefHeight="70.0" prefWidth="753.0" text="Home Pharmacy App">
                <font>
                   <Font name="System Bold" size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="dateLabel" alignment="CENTER_RIGHT" layoutX="672.0" prefHeight="35.0" prefWidth="280.0" text="Label" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
                </font>
             </Label>
          </children></AnchorPane>
@@ -134,6 +179,12 @@
             <Label fx:id="daysToEndLabel" layoutX="219.0" layoutY="205.0" prefHeight="20.0" prefWidth="89.0" text="...">
                <font>
                   <Font size="14.0" />
+               </font>
+            </Label>
+            <JFXListView fx:id="quickList" layoutX="14.0" layoutY="272.0" prefHeight="300.0" prefWidth="490.0" />
+            <Label layoutX="14.0" layoutY="241.0" prefHeight="20.0" prefWidth="346.0" text="Quick List of medicines needed for this Treatment">
+               <font>
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
          </children>

@@ -8,6 +8,10 @@ public class Treatment {
     private String name;
     private java.sql.Date startDate;
     private int duration;
+    private int headache;
+    private int fever;
+    private int cold;
+    private int cough;
 
     public Treatment() {
     }
@@ -16,10 +20,15 @@ public class Treatment {
         this.name = name;
     }
 
-    public Treatment(String name, Date startDate, int duration) {
+    public Treatment(int id, String name, Date startDate, int duration, int headache, int fever, int cold, int cough) {
+        this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.duration = duration;
+        this.headache = headache;
+        this.fever = fever;
+        this.cold = cold;
+        this.cough = cough;
     }
 
     public int getId() {
@@ -52,6 +61,38 @@ public class Treatment {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public int getHeadache() {
+        return headache;
+    }
+
+    public void setHeadache(int headache) {
+        this.headache = headache;
+    }
+
+    public int getFever() {
+        return fever;
+    }
+
+    public void setFever(int fever) {
+        this.fever = fever;
+    }
+
+    public int getCold() {
+        return cold;
+    }
+
+    public void setCold(int cold) {
+        this.cold = cold;
+    }
+
+    public int getCough() {
+        return cough;
+    }
+
+    public void setCough(int cough) {
+        this.cough = cough;
     }
 
     @Override

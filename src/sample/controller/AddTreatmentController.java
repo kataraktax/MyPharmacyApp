@@ -1,6 +1,7 @@
 package sample.controller;
 
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -36,6 +37,18 @@ public class AddTreatmentController {
 
     @FXML
     private JFXTextField treatmentDuration;
+
+    @FXML
+    private JFXCheckBox headacheBox;
+
+    @FXML
+    private JFXCheckBox feverBox;
+
+    @FXML
+    private JFXCheckBox coldBox;
+
+    @FXML
+    private JFXCheckBox coughBox;
 
     @FXML
     void initialize() {
@@ -75,14 +88,32 @@ public class AddTreatmentController {
 
     private void addTreatment() throws SQLException, ClassNotFoundException {
         DatabaseHandler databaseHandler = new DatabaseHandler();
+        Treatment tempTreatment = new Treatment();
 
-        String name = treatmentName.getText();
+        tempTreatment.setName(treatmentName.getText());
         LocalDate now = LocalDate.now().plusDays(1);
-        java.sql.Date startDate = java.sql.Date.valueOf(now);
-        int duration = Integer.parseInt(treatmentDuration.getText());
-
-        Treatment tempTreatment = new Treatment(name, startDate, duration);
-
+        tempTreatment.setStartDate(java.sql.Date.valueOf(now));
+        tempTreatment.setDuration(Integer.parseInt(treatmentDuration.getText()));
+        if (headacheBox.isSelected()){
+            tempTreatment.setHeadache(1);
+        } else {
+            tempTreatment.setHeadache(0);
+        }
+        if (feverBox.isSelected()){
+            tempTreatment.setFever(1);
+        } else{
+            tempTreatment.setFever(0);
+        }
+        if (coldBox.isSelected()){
+            tempTreatment.setCold(1);
+        } else {
+            tempTreatment.setCold(0);
+        }
+        if (coughBox.isSelected()){
+            tempTreatment.setCough(1);
+        } else {
+            tempTreatment.setCough(0);
+        }
         databaseHandler.createTreatment(tempTreatment, LoginController.userId);
     }
 

@@ -27,7 +27,7 @@ public class FadeInFadeOut {
         fadeTransition.setNode(node);
         fadeTransition.setDuration(Duration.seconds(1.5));
         fadeTransition.setFromValue(1);
-        fadeTransition.setToValue(0);
+        fadeTransition.setToValue(0.3);
         fadeTransition.setOnFinished(event -> {
             try {
                 loadNextScene(node, nextScene);
@@ -53,7 +53,7 @@ public class FadeInFadeOut {
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setNode(node);
         fadeTransition.setDuration(Duration.seconds(1.5));
-        fadeTransition.setFromValue(0.5);
+        fadeTransition.setFromValue(0.3);
         fadeTransition.setToValue(1);
         fadeTransition.play();
     }

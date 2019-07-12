@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootAnchorPane" focusTraversable="true" prefHeight="20.0" prefWidth="460.0" style="-fx-background-color: #b3e5fc;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="medicineName" layoutX="5.0" prefHeight="20.0" prefWidth="140.0" style="-fx-background-color: #b3e5fc;" text="Label">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="status" layoutX="155.0" prefHeight="20.0" prefWidth="215.0" style="-fx-background-color: #b3e5fc;" text="Label">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

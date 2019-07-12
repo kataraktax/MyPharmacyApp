@@ -39,9 +39,6 @@ public class EditMedicineController {
     private ImageView cancelEditMedicineButton;
 
     @FXML
-    private Label loginError;
-
-    @FXML
     private JFXCheckBox headacheBox;
 
     @FXML
@@ -60,7 +57,6 @@ public class EditMedicineController {
 
         DatabaseHandler databaseHandler = new DatabaseHandler();
 
-        loginError.setVisible(false);
         String mainPanelScene = "/sample/view/main_panel.fxml";
 
         medicineName.setPromptText(MainPanelController.selectedMedicine.getName());

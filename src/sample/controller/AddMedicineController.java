@@ -125,7 +125,6 @@ public class AddMedicineController {
             tempMedicine.setCough(0);
         }
         databaseHandler.addMedicine(tempMedicine);
-
     }
 
 }

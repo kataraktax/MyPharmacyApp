@@ -30,4 +30,8 @@ public class Const {
     public static final String TREATMENTS_NAME = "treatmentname";
     public static final String TREATMENTS_STARTDATE = "startdate";
     public static final String TREATMENTS_DURATION = "duration";
+    public static final String TREATMENTS_HEADACHE = "headache";
+    public static final String TREATMENTS_FEVER = "fever";
+    public static final String TREATMENTS_COLD = "cold";
+    public static final String TREATMENTS_COUGH = "cough";
 }

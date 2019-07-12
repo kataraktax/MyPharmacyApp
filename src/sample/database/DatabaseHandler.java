@@ -164,13 +164,18 @@ public class DatabaseHandler extends Configs {
     public void createTreatment(Treatment treatment, int userId) throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO " + Const.TREATMENTS_TABLE + "(" + Const.TREATMENTS_USERID + ","
                 + Const.TREATMENTS_NAME + "," + Const.TREATMENTS_STARTDATE + ","
-                + Const.TREATMENTS_DURATION + ")" + "VALUES(?,?,?,?)";
+                + Const.TREATMENTS_DURATION + "," + Const.TREATMENTS_HEADACHE + "," + Const.TREATMENTS_FEVER
+                + "," + Const.TREATMENTS_COLD + "," + Const.TREATMENTS_COUGH  + ")" + "VALUES(?,?,?,?,?,?,?,?)";
 
         PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
         preparedStatement.setInt(1, userId);
         preparedStatement.setString(2, treatment.getName());
         preparedStatement.setDate(3, treatment.getStartDate());
         preparedStatement.setInt(4, treatment.getDuration());
+        preparedStatement.setInt(5, treatment.getHeadache());
+        preparedStatement.setInt(6, treatment.getFever());
+        preparedStatement.setInt(7, treatment.getCold());
+        preparedStatement.setInt(8,treatment.getCough());
 
         preparedStatement.executeUpdate();
     }
@@ -191,8 +196,7 @@ public class DatabaseHandler extends Configs {
     public ResultSet getTreatmentByName(String name) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = null;
         if (!name.equals("")){
-            String query = "SELECT " + Const.TREATMENTS_ID + "," + Const.TREATMENTS_STARTDATE
-                    + "," + Const.TREATMENTS_DURATION + " FROM " + Const.TREATMENTS_TABLE + " WHERE "
+            String query = "SELECT * FROM " + Const.TREATMENTS_TABLE + " WHERE "
                     + Const.TREATMENTS_NAME + "=?";
             PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
@@ -200,5 +204,22 @@ public class DatabaseHandler extends Configs {
         }
 
         return resultSet;
+    }
+
+    public void updateTreatment(Treatment treatment, int id) throws SQLException, ClassNotFoundException {
+        String query = "UPDATE " + Const.TREATMENTS_TABLE + " SET " + Const.TREATMENTS_NAME + " =? ,"
+                + Const.TREATMENTS_DURATION + " =? ," + Const.TREATMENTS_HEADACHE + " =? ,"
+                + Const.TREATMENTS_FEVER + " =? ," + Const.TREATMENTS_COLD + " =? ,"
+                + Const.TREATMENTS_COUGH + " =? " + " WHERE " + Const.TREATMENTS_ID + " =?";
+        PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+        preparedStatement.setString(1, treatment.getName());
+        preparedStatement.setInt(2, treatment.getDuration());
+        preparedStatement.setInt(3, treatment.getHeadache());
+        preparedStatement.setInt(4, treatment.getFever());
+        preparedStatement.setInt(5, treatment.getCold());
+        preparedStatement.setInt(6, treatment.getCough());
+        preparedStatement.setInt(7, id);
+
+        preparedStatement.executeUpdate();
     }
 }

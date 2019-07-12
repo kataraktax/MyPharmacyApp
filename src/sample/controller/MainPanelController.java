@@ -1,6 +1,5 @@
 package sample.controller;
 
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,8 +21,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class MainPanelController {
     @FXML
@@ -37,6 +36,10 @@ public class MainPanelController {
     private Label profilePanelUserName;
     @FXML
     private ImageView profileEditButton;
+    @FXML
+    private ImageView changeUser;
+    @FXML
+    private Label dateLabel;
     @FXML
     private ImageView addMedicine;
     @FXML
@@ -65,23 +68,83 @@ public class MainPanelController {
     private ComboBox<String> treatmentComboBox;
     @FXML
     private AnchorPane popupTreatmentPanel;
+    @FXML
+    private JFXListView<Medicine> quickList;
+
+    private ObservableList<Medicine> medicinesQuickList;
+
     private DatabaseHandler databaseHandler;
+
     static Medicine selectedMedicine;
+
     static Treatment selectedTreatment;
+
+    static String selectedItemComboBox;
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         FadeInFadeOut fadeInFadeOut = new FadeInFadeOut();
+        medicinesQuickList = FXCollections.observableArrayList();
 
         // resource scene strings
         String profileEditScene = "/sample/view/edit_profile.fxml";
         String addMedicineScene = "/sample/view/add_medicine.fxml";
         String editMedicineScene = "/sample/view/edit_medicine.fxml";
         String addTreatmentScene = "/sample/view/add_treatment.fxml";
+        String editTreatmentScene = "/sample/view/edit_treatment.fxml";
+        String loginScene = "/sample/view/login.fxml";
 
         // prepare main panel to work
         refreshMedicineList();
         updateProfilePanel();
         updateComboBox();
+        if (selectedTreatment != null){
+            Treatment tempSelectedTreatment = new Treatment();
+            if (!selectedItemComboBox.isEmpty()){
+                ResultSet resultSet = databaseHandler.getTreatmentByName(selectedItemComboBox);
+                while (resultSet.next()){
+                    tempSelectedTreatment.setId(resultSet.getInt("treatmentid"));
+                    tempSelectedTreatment.setName(selectedItemComboBox);
+                    tempSelectedTreatment.setStartDate(resultSet.getDate("startdate"));
+                    tempSelectedTreatment.setDuration(resultSet.getInt("duration"));
+                    tempSelectedTreatment.setHeadache(resultSet.getInt("headache"));
+                    tempSelectedTreatment.setFever(resultSet.getInt("fever"));
+                    tempSelectedTreatment.setCold(resultSet.getInt("cold"));
+                    tempSelectedTreatment.setCough(resultSet.getInt("cough"));
+                }
+            }
+            selectedTreatment = tempSelectedTreatment;
+            System.out.println(selectedTreatment.toString());
+            ObservableList<Medicine> tempMedicinesQuickList = FXCollections.observableArrayList();
+            treatmentDateLabel.setText(selectedTreatment.getStartDate().toString());
+            treatmentDurationLabel.setText(String.valueOf(selectedTreatment.getDuration()));
+            LocalDate startDate = selectedTreatment.getStartDate().toLocalDate();
+            LocalDate endDate = startDate.plusDays(selectedTreatment.getDuration());
+            endDateLabel.setText(endDate.toString());
+            LocalDate today = LocalDate.now();
+            String daysToEnd = String.valueOf(today.until(endDate, ChronoUnit.DAYS));
+            daysToEndLabel.setText(daysToEnd);
+            medicines.forEach(medicine -> {
+                if (medicine.getHeadache() == 1 && selectedTreatment.getHeadache() == 1){
+                    tempMedicinesQuickList.add(medicine);
+                } else if (medicine.getFever() == 1 && selectedTreatment.getFever() == 1){
+                    tempMedicinesQuickList.add(medicine);
+                } else if (medicine.getCold() == 1 && selectedTreatment.getCold() == 1){
+                    tempMedicinesQuickList.add(medicine);
+                } else if (medicine.getCough() == 1 && selectedTreatment.getCough() == 1){
+                    tempMedicinesQuickList.add(medicine);
+                }
+            });
+            medicinesQuickList = tempMedicinesQuickList;
+            quickList.getItems().setAll(medicinesQuickList.sorted());
+            quickList.setCellFactory(CellController -> new QuickListCellController());
+            treatmentComboBox.getSelectionModel().select(selectedTreatment.getName());
+        }
+
+
+
+        LocalDate dateLabelText = LocalDate.now();
+        dateLabel.setText("Today is: " + dateLabelText.toString());
 
         profileEditButton.setOnMouseClicked(event -> {
             try {
@@ -145,8 +208,9 @@ public class MainPanelController {
         treatmentComboBox.setOnAction(event -> {
             databaseHandler = new DatabaseHandler();
             selectedTreatment = new Treatment();
-            String selectedItemComboBox = treatmentComboBox.getSelectionModel().getSelectedItem();
-            if (!selectedItemComboBox.equals("")) {
+            selectedItemComboBox = treatmentComboBox.getSelectionModel().getSelectedItem();
+            ObservableList<Medicine> tempMedicinesQuickList = FXCollections.observableArrayList();
+            if (!selectedItemComboBox.isEmpty()) {
                 try {
                     ResultSet resultSet = databaseHandler.getTreatmentByName(selectedItemComboBox);
                     while (resultSet.next()) {
@@ -154,6 +218,10 @@ public class MainPanelController {
                         selectedTreatment.setName(selectedItemComboBox);
                         selectedTreatment.setStartDate(resultSet.getDate("startdate"));
                         selectedTreatment.setDuration(resultSet.getInt("duration"));
+                        selectedTreatment.setHeadache(resultSet.getInt("headache"));
+                        selectedTreatment.setFever(resultSet.getInt("fever"));
+                        selectedTreatment.setCold(resultSet.getInt("cold"));
+                        selectedTreatment.setCough(resultSet.getInt("cough"));
                         if (selectedTreatment != null){
                             treatmentDateLabel.setText(selectedTreatment.getStartDate().toString());
                             treatmentDurationLabel.setText(String.valueOf(selectedTreatment.getDuration()));
@@ -164,14 +232,48 @@ public class MainPanelController {
                             String daysToEnd = String.valueOf(today.until(endDate, ChronoUnit.DAYS));
                             daysToEndLabel.setText(daysToEnd);
                         }
+                        medicines.forEach(medicine -> {
+                            if (medicine.getHeadache() == 1 && selectedTreatment.getHeadache() == 1){
+                                tempMedicinesQuickList.add(medicine);
+                            } else if (medicine.getFever() == 1 && selectedTreatment.getFever() == 1){
+                                tempMedicinesQuickList.add(medicine);
+                            } else if (medicine.getCold() == 1 && selectedTreatment.getCold() == 1){
+                                tempMedicinesQuickList.add(medicine);
+                            } else if (medicine.getCough() == 1 && selectedTreatment.getCough() == 1){
+                                tempMedicinesQuickList.add(medicine);
+                            }
+                        });
+                        tempMedicinesQuickList.sorted();
+                        medicinesQuickList = tempMedicinesQuickList;
+                        quickList.getItems().setAll(medicinesQuickList.sorted());
+                        quickList.setCellFactory(CellController -> new QuickListCellController());
                     }
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             } else {
-
+                treatmentDateLabel.setText(selectedTreatment.getStartDate().toString());
+                treatmentDurationLabel.setText(String.valueOf(selectedTreatment.getDuration()));
+                LocalDate startDate = selectedTreatment.getStartDate().toLocalDate();
+                LocalDate endDate = startDate.plusDays(selectedTreatment.getDuration());
+                endDateLabel.setText(endDate.toString());
+                LocalDate today = LocalDate.now();
+                String daysToEnd = String.valueOf(today.until(endDate, ChronoUnit.DAYS));
+                daysToEndLabel.setText(daysToEnd);
             }
         });
+        editTreatment.setOnMouseClicked(event -> {
+            if (selectedTreatment != null) {
+                try {
+                    fadeInFadeOut.popupYPanel(popupTreatmentPanel, editTreatmentScene, 369);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        fadeInFadeOut.hoverOverIconEffects(editTreatment);
+        changeUser.setOnMouseClicked(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, loginScene));
+        fadeInFadeOut.hoverOverIconEffects(changeUser);
 
     }
     private void refreshMedicineList() throws SQLException, ClassNotFoundException {
@@ -191,9 +293,12 @@ public class MainPanelController {
             medicine.setCough(resultSet.getInt("cough"));
 
             medicines.add(medicine);
-            medicineList.setItems(medicines);
-            medicineList.setCellFactory(CellController -> new CellController());
+            Comparator<Medicine> comparator = Comparator.comparing(Medicine::getName);
+            FXCollections.sort(medicines, comparator);
+
         }
+        medicineList.setItems(medicines);
+        medicineList.setCellFactory(CellController -> new MedicinesCellController());
     }
     private void updateProfilePanel() throws SQLException, ClassNotFoundException {
         databaseHandler = new DatabaseHandler();
@@ -224,14 +329,10 @@ public class MainPanelController {
 
             }
         }
-        treatmentComboBox.setItems(comboBoxNames);
-        if (selectedTreatment != null){
-            treatmentComboBox.getSelectionModel().select(selectedTreatment.getName());
-            treatmentDateLabel.setText(selectedTreatment.getStartDate().toString());
-            treatmentDurationLabel.setText(String.valueOf(selectedTreatment.getDuration()));
-            LocalDate endDate = LocalDate.now().plusDays(selectedTreatment.getDuration());
-            endDateLabel.setText(endDate.toString());
-        }
+        treatmentComboBox.setItems(comboBoxNames.sorted());
 
     }
+    private void updateQuickList(){
+    }
 }
+
