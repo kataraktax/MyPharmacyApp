@@ -1,9 +1,5 @@
 package sample.model;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.sql.*;
-
 public class Medicine {
 
     private int id;

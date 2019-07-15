@@ -67,11 +67,12 @@ public class AddTreatmentController {
         addTreatmentButton.setOnMouseClicked(event -> {
             if (!treatmentName.getText().equals("") && !treatmentDuration.getText().equals("")) {
                 String durationText = treatmentDuration.getText();
-                if (Integer.parseInt(durationText) > 0){
+                int durationInt = Integer.parseInt(durationText);
+                if ((durationInt) > 0){
                     try {
                         addTreatment();
                         fadeInFadeOut.makeFadeOut(rootAnchorPane, mainPanelScene);
-                    } catch (SQLException | ClassNotFoundException e) {
+                    } catch (SQLException | ClassNotFoundException | NumberFormatException e) {
                         e.printStackTrace();
                     }
                 }

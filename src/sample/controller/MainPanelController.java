@@ -3,6 +3,7 @@ package sample.controller;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -79,7 +80,7 @@ public class MainPanelController {
 
     static Treatment selectedTreatment;
 
-    static String selectedItemComboBox;
+    private static String selectedItemComboBox;
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
@@ -93,55 +94,15 @@ public class MainPanelController {
         String addTreatmentScene = "/sample/view/add_treatment.fxml";
         String editTreatmentScene = "/sample/view/edit_treatment.fxml";
         String loginScene = "/sample/view/login.fxml";
+        String mainPanelScene = "/sample/view/main_panel.fxml";
 
         // prepare main panel to work
         refreshMedicineList();
         updateProfilePanel();
         updateComboBox();
         if (selectedTreatment != null){
-            Treatment tempSelectedTreatment = new Treatment();
-            if (!selectedItemComboBox.isEmpty()){
-                ResultSet resultSet = databaseHandler.getTreatmentByName(selectedItemComboBox);
-                while (resultSet.next()){
-                    tempSelectedTreatment.setId(resultSet.getInt("treatmentid"));
-                    tempSelectedTreatment.setName(selectedItemComboBox);
-                    tempSelectedTreatment.setStartDate(resultSet.getDate("startdate"));
-                    tempSelectedTreatment.setDuration(resultSet.getInt("duration"));
-                    tempSelectedTreatment.setHeadache(resultSet.getInt("headache"));
-                    tempSelectedTreatment.setFever(resultSet.getInt("fever"));
-                    tempSelectedTreatment.setCold(resultSet.getInt("cold"));
-                    tempSelectedTreatment.setCough(resultSet.getInt("cough"));
-                }
-            }
-            selectedTreatment = tempSelectedTreatment;
-            System.out.println(selectedTreatment.toString());
-            ObservableList<Medicine> tempMedicinesQuickList = FXCollections.observableArrayList();
-            treatmentDateLabel.setText(selectedTreatment.getStartDate().toString());
-            treatmentDurationLabel.setText(String.valueOf(selectedTreatment.getDuration()));
-            LocalDate startDate = selectedTreatment.getStartDate().toLocalDate();
-            LocalDate endDate = startDate.plusDays(selectedTreatment.getDuration());
-            endDateLabel.setText(endDate.toString());
-            LocalDate today = LocalDate.now();
-            String daysToEnd = String.valueOf(today.until(endDate, ChronoUnit.DAYS));
-            daysToEndLabel.setText(daysToEnd);
-            medicines.forEach(medicine -> {
-                if (medicine.getHeadache() == 1 && selectedTreatment.getHeadache() == 1){
-                    tempMedicinesQuickList.add(medicine);
-                } else if (medicine.getFever() == 1 && selectedTreatment.getFever() == 1){
-                    tempMedicinesQuickList.add(medicine);
-                } else if (medicine.getCold() == 1 && selectedTreatment.getCold() == 1){
-                    tempMedicinesQuickList.add(medicine);
-                } else if (medicine.getCough() == 1 && selectedTreatment.getCough() == 1){
-                    tempMedicinesQuickList.add(medicine);
-                }
-            });
-            medicinesQuickList = tempMedicinesQuickList;
-            quickList.getItems().setAll(medicinesQuickList.sorted());
-            quickList.setCellFactory(CellController -> new QuickListCellController());
-            treatmentComboBox.getSelectionModel().select(selectedTreatment.getName());
+            updateQuickList();
         }
-
-
 
         LocalDate dateLabelText = LocalDate.now();
         dateLabel.setText("Today is: " + dateLabelText.toString());
@@ -155,6 +116,7 @@ public class MainPanelController {
 
         });
         fadeInFadeOut.hoverOverIconEffects(profileEditButton);
+
         addMedicine.setOnMouseClicked(event -> {
             try {
                 fadeInFadeOut.popupYPanel(popupMedicinePanel, addMedicineScene, 479);
@@ -163,6 +125,7 @@ public class MainPanelController {
             }
         });
         fadeInFadeOut.hoverOverIconEffects(addMedicine);
+
         editMedicine.setOnMouseClicked(event -> {
             selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
             if (selectedMedicine != null) {
@@ -174,6 +137,7 @@ public class MainPanelController {
             }
         });
         fadeInFadeOut.hoverOverIconEffects(editMedicine);
+
         deleteMedicine.setOnMouseClicked(event -> {
             selectedMedicine = medicineList.getSelectionModel().getSelectedItem();
             if (selectedMedicine != null) {
@@ -197,6 +161,7 @@ public class MainPanelController {
             }
         });
         fadeInFadeOut.hoverOverIconEffects(deleteMedicine);
+
         addTreatment.setOnMouseClicked(event -> {
             try {
                 fadeInFadeOut.popupYPanel(popupTreatmentPanel, addTreatmentScene, 369);
@@ -205,6 +170,7 @@ public class MainPanelController {
             }
         });
         fadeInFadeOut.hoverOverIconEffects(addTreatment);
+
         treatmentComboBox.setOnAction(event -> {
             databaseHandler = new DatabaseHandler();
             selectedTreatment = new Treatment();
@@ -243,9 +209,10 @@ public class MainPanelController {
                                 tempMedicinesQuickList.add(medicine);
                             }
                         });
-                        tempMedicinesQuickList.sorted();
                         medicinesQuickList = tempMedicinesQuickList;
-                        quickList.getItems().setAll(medicinesQuickList.sorted());
+                        SortedList<Medicine> sortedList = new SortedList<>(medicinesQuickList,
+                                Comparator.comparing(o -> o.getName().toUpperCase()));
+                        quickList.getItems().setAll(sortedList);
                         quickList.setCellFactory(CellController -> new QuickListCellController());
                     }
                 } catch (SQLException | ClassNotFoundException e) {
@@ -262,6 +229,7 @@ public class MainPanelController {
                 daysToEndLabel.setText(daysToEnd);
             }
         });
+
         editTreatment.setOnMouseClicked(event -> {
             if (selectedTreatment != null) {
                 try {
@@ -272,6 +240,21 @@ public class MainPanelController {
             }
         });
         fadeInFadeOut.hoverOverIconEffects(editTreatment);
+
+        deleteTreatment.setOnMouseClicked(event -> {
+            treatmentComboBox = new ComboBox<>();
+            if (selectedTreatment != null) {
+                try {
+                    databaseHandler.deleteTreatment(selectedTreatment.getId());
+                    selectedTreatment = null;
+                    fadeInFadeOut.quickRefresh(rootAnchorPane, mainPanelScene);
+                } catch (SQLException | ClassNotFoundException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        fadeInFadeOut.hoverOverIconEffects(deleteTreatment);
+        
         changeUser.setOnMouseClicked(event -> fadeInFadeOut.makeFadeOut(rootAnchorPane, loginScene));
         fadeInFadeOut.hoverOverIconEffects(changeUser);
 
@@ -293,11 +276,10 @@ public class MainPanelController {
             medicine.setCough(resultSet.getInt("cough"));
 
             medicines.add(medicine);
-            Comparator<Medicine> comparator = Comparator.comparing(Medicine::getName);
-            FXCollections.sort(medicines, comparator);
-
         }
-        medicineList.setItems(medicines);
+        SortedList<Medicine> sortedList = new SortedList<>(medicines,
+                Comparator.comparing(o -> o.getName().toUpperCase()));
+        medicineList.setItems(sortedList);
         medicineList.setCellFactory(CellController -> new MedicinesCellController());
     }
     private void updateProfilePanel() throws SQLException, ClassNotFoundException {
@@ -329,10 +311,51 @@ public class MainPanelController {
 
             }
         }
-        treatmentComboBox.setItems(comboBoxNames.sorted());
-
+        SortedList<String> sortedList = new SortedList<>(comboBoxNames, Comparator.comparing(String::toUpperCase));
+        treatmentComboBox.setItems(sortedList);
     }
-    private void updateQuickList(){
+    private void updateQuickList() throws SQLException, ClassNotFoundException {
+        Treatment tempSelectedTreatment = new Treatment();
+        if (!selectedItemComboBox.isEmpty()){
+            ResultSet resultSet = databaseHandler.getTreatmentByName(selectedItemComboBox);
+            while (resultSet.next()){
+                tempSelectedTreatment.setId(resultSet.getInt("treatmentid"));
+                tempSelectedTreatment.setName(selectedItemComboBox);
+                tempSelectedTreatment.setStartDate(resultSet.getDate("startdate"));
+                tempSelectedTreatment.setDuration(resultSet.getInt("duration"));
+                tempSelectedTreatment.setHeadache(resultSet.getInt("headache"));
+                tempSelectedTreatment.setFever(resultSet.getInt("fever"));
+                tempSelectedTreatment.setCold(resultSet.getInt("cold"));
+                tempSelectedTreatment.setCough(resultSet.getInt("cough"));
+            }
+        }
+        selectedTreatment = tempSelectedTreatment;
+        ObservableList<Medicine> tempMedicinesQuickList = FXCollections.observableArrayList();
+        treatmentDateLabel.setText(selectedTreatment.getStartDate().toString());
+        treatmentDurationLabel.setText(String.valueOf(selectedTreatment.getDuration()));
+        LocalDate startDate = selectedTreatment.getStartDate().toLocalDate();
+        LocalDate endDate = startDate.plusDays(selectedTreatment.getDuration());
+        endDateLabel.setText(endDate.toString());
+        LocalDate today = LocalDate.now();
+        String daysToEnd = String.valueOf(today.until(endDate, ChronoUnit.DAYS));
+        daysToEndLabel.setText(daysToEnd);
+        medicines.forEach(medicine -> {
+            if (medicine.getHeadache() == 1 && selectedTreatment.getHeadache() == 1){
+                tempMedicinesQuickList.add(medicine);
+            } else if (medicine.getFever() == 1 && selectedTreatment.getFever() == 1){
+                tempMedicinesQuickList.add(medicine);
+            } else if (medicine.getCold() == 1 && selectedTreatment.getCold() == 1){
+                tempMedicinesQuickList.add(medicine);
+            } else if (medicine.getCough() == 1 && selectedTreatment.getCough() == 1){
+                tempMedicinesQuickList.add(medicine);
+            }
+        });
+        medicinesQuickList = tempMedicinesQuickList;
+        SortedList<Medicine> sortedList = new SortedList<>(medicinesQuickList,
+                Comparator.comparing(o -> o.getName().toUpperCase()));
+        quickList.getItems().setAll(sortedList);
+        quickList.setCellFactory(CellController -> new QuickListCellController());
+        treatmentComboBox.getSelectionModel().select(selectedTreatment.getName());
     }
 }
 

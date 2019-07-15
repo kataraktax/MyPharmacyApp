@@ -1,37 +1,36 @@
 package sample.database;
 
-import java.time.LocalDate;
 
-public class Const {
+class Const {
 
     // User Table Const
-    public static final String USERS_TABLE = "users";
-    public static final String USERS_ID = "userid";
-    public static final String USERS_FIRSTNAME = "firstname";
-    public static final String USERS_LASTNAME = "lastname";
-    public static final String USERS_USERNAME = "username";
-    public static final String USERS_PASSWORD = "password";
+    static final String USERS_TABLE = "users";
+    static final String USERS_ID = "userid";
+    static final String USERS_FIRSTNAME = "firstname";
+    static final String USERS_LASTNAME = "lastname";
+    static final String USERS_USERNAME = "username";
+    static final String USERS_PASSWORD = "password";
 
     // Medicine Table Const
-    public static final String MEDICINES_TABLE = "medicines";
-    public static final String MEDICINES_ID = "medicineid";
-    public static final String MEDICINES_NAME = "name";
-    public static final String MEDICINES_DESCRIPTION = "description";
-    public static final String MEDICINES_EXPIREDATE = "expiredate";
-    public static final String MEDICINES_HEADACHE = "headache";
-    public static final String MEDICINES_FEVER = "fever";
-    public static final String MEDICINES_COLD = "cold";
-    public static final String MEDICINES_COUGH = "cough";
+    static final String MEDICINES_TABLE = "medicines";
+    static final String MEDICINES_ID = "medicineid";
+    static final String MEDICINES_NAME = "name";
+    static final String MEDICINES_DESCRIPTION = "description";
+    static final String MEDICINES_EXPIREDATE = "expiredate";
+    static final String MEDICINES_HEADACHE = "headache";
+    static final String MEDICINES_FEVER = "fever";
+    static final String MEDICINES_COLD = "cold";
+    static final String MEDICINES_COUGH = "cough";
 
     // Treatment Table Const
-    public static final String TREATMENTS_TABLE = "treatments";
-    public static final String TREATMENTS_ID = "treatmentid";
-    public static final String TREATMENTS_USERID = "userid";
-    public static final String TREATMENTS_NAME = "treatmentname";
-    public static final String TREATMENTS_STARTDATE = "startdate";
-    public static final String TREATMENTS_DURATION = "duration";
-    public static final String TREATMENTS_HEADACHE = "headache";
-    public static final String TREATMENTS_FEVER = "fever";
-    public static final String TREATMENTS_COLD = "cold";
-    public static final String TREATMENTS_COUGH = "cough";
+    static final String TREATMENTS_TABLE = "treatments";
+    static final String TREATMENTS_ID = "treatmentid";
+    static final String TREATMENTS_USERID = "userid";
+    static final String TREATMENTS_NAME = "treatmentname";
+    static final String TREATMENTS_STARTDATE = "startdate";
+    static final String TREATMENTS_DURATION = "duration";
+    static final String TREATMENTS_HEADACHE = "headache";
+    static final String TREATMENTS_FEVER = "fever";
+    static final String TREATMENTS_COLD = "cold";
+    static final String TREATMENTS_COUGH = "cough";
 }

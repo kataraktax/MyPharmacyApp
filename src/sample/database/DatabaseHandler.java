@@ -4,19 +4,16 @@ import sample.model.Medicine;
 import sample.model.Treatment;
 import sample.model.User;
 
-import java.lang.reflect.ParameterizedType;
 import java.sql.*;
 
 public class DatabaseHandler extends Configs {
 
-    Connection dbConnection;
-
-    public Connection getDbConnection() throws ClassNotFoundException, SQLException {
+    private Connection getDbConnection() throws ClassNotFoundException, SQLException {
         String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName + "?serverTimezone=UTC";
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        dbConnection = DriverManager.getConnection(connectionString, dbUser, dbPass);
+        Connection dbConnection = DriverManager.getConnection(connectionString, dbUser, dbPass);
 
         return dbConnection;
 
@@ -119,7 +116,7 @@ public class DatabaseHandler extends Configs {
 
     public ResultSet getMedicines() throws SQLException, ClassNotFoundException {
 
-        ResultSet resultSet = null;
+        ResultSet resultSet;
 
         String query = "SELECT * FROM " + Const.MEDICINES_TABLE;
 
@@ -221,5 +218,15 @@ public class DatabaseHandler extends Configs {
         preparedStatement.setInt(7, id);
 
         preparedStatement.executeUpdate();
+    }
+
+    public void deleteTreatment(int id) throws SQLException, ClassNotFoundException {
+        if (id >= 0){
+            String query = "DELETE FROM " + Const.TREATMENTS_TABLE + " WHERE " + Const.TREATMENTS_ID + "=?";
+
+            PreparedStatement preparedStatement = getDbConnection().prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        }
     }
 }

@@ -4,10 +4,8 @@ import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import sample.animation.FadeInFadeOut;
 import sample.database.DatabaseHandler;
 import sample.model.Medicine;
 

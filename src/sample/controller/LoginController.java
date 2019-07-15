@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 public class LoginController {
 
-    public static int userId;
+    static int userId;
 
     @FXML
     private AnchorPane rootAnchorPane;

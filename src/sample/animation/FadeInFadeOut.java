@@ -37,6 +37,14 @@ public class FadeInFadeOut {
         });
         fadeTransition.play();
     }
+    public void quickRefresh(Node node, String scene) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(scene));
+        Scene newScene = new Scene(root);
+        Stage currentStage = (Stage) node.getScene().getWindow();
+        currentStage.setScene(newScene);
+        currentStage.setTitle(Main.APP_NAME);
+        currentStage.getIcons().add(Main.appImage);
+    }
 
     private void loadNextScene(Node node, String resource) throws IOException {
 
